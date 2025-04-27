@@ -12,6 +12,7 @@ function App() {
         <img src={xuoLogo} className="logo" alt="Vite logo" />
       </div>
       <h1>Best Market Place 🚫 🧢</h1>
+      <p>OH YEAH MAMAS</p>
       <a href="https://xuoapi.vercel.app/">
         <marquee behavior="scroll" direction="left" scrollamount="10">
           Aceda a API aqui!
