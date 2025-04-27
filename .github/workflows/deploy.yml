@@ -1,5 +1,5 @@
 name: Deploy to Vercel
-
+on: workflow_dispatch
 jobs:
   deploy:
     steps:
