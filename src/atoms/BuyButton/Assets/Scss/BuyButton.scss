@@ -1,0 +1,35 @@
+@mixin atom-sign-up-button($name: '.buy-button') {
+  #{$name} {
+    &__button {
+      background-color: #012030; 
+      color: white;
+      border: none;                                                                                                                                               
+      border-radius: 10px;
+      font-size: 20px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      padding: 20px 0px;
+      width: 100%;
+      text-transform: uppercase;
+
+      &:hover {
+        background-color: adjust-color(#012030, $lightness: -10%);
+      }
+
+      &:active {
+        background-color: adjust-color(#012030, $lightness: -15%);
+      }
+
+      &:disabled {
+        background-color: #999;
+        cursor: not-allowed;
+      }
+    }
+
+    @content;
+  }
+}
+
+@include atom-sign-up-button();

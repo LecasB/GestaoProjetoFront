@@ -1,0 +1,35 @@
+@mixin atom-sign-up-button($name: '.sign-up-button') {
+  #{$name} {
+    &__button {
+      background-color: #6a6a6a; 
+      color: white;
+      border: none;
+      border-radius: 0px;
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      padding: 25px 0px;
+      width: 100%;
+      text-transform: uppercase;
+
+      &:hover {
+        background-color: adjust-color(#6a6a6a, $lightness: -10%);
+      }
+
+      &:active {
+        background-color: adjust-color(#6a6a6a, $lightness: -15%);
+      }
+
+      &:disabled {
+        background-color: #999;
+        cursor: not-allowed;
+      }
+    }
+
+    @content;
+  }
+}
+
+@include atom-sign-up-button();

@@ -1,0 +1,26 @@
+.buy-button__button {
+  background-color: #012030;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 20px;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  padding: 20px 0px;
+  width: 100%;
+  text-transform: uppercase;
+}
+.buy-button__button:hover {
+  background-color: hsl(200.4255319149, 95.9183673469%, -0.3921568627%);
+}
+.buy-button__button:active {
+  background-color: hsl(200.4255319149, 95.9183673469%, -5.3921568627%);
+}
+.buy-button__button:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+/*# sourceMappingURL=BuyButton.css.map */
