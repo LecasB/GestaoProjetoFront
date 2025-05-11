@@ -3,7 +3,7 @@ import FullChat from "./FullChat";
 import UserList from "./UserList";
 
 const MessagePage = () => {
-  const user = "681fdfed8ff84f652a0dfb01";
+  const user = sessionStorage.getItem("id");
 
   const [userList, setUserList] = useState([]);
   const [selectUser, setSelectUser] = useState(null);

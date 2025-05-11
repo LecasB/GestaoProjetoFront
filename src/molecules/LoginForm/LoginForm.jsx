@@ -22,7 +22,14 @@ const LoginForm = () => {
         }),
       });
 
-      setData(await res.json());
+      const jsonData = await res.json();
+
+      setData(jsonData);
+
+      if (jsonData.id) {
+        sessionStorage.setItem("id", jsonData.id);
+      }
+
       setSucess(true);
 
       console.log("Response Boa!:", res);
