@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import "./FullChat.scss";
 import { IoIosSend } from "react-icons/io";
 import InputEmoji from "react-input-emoji";
@@ -9,36 +9,41 @@ const FullChat = ({ user, otherUser }) => {
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState("");
   const [socket, setSocket] = useState(null);
+  const messagesEndRef = useRef(null); // 🔽 referência para scroll
 
+  // 🔌 Conexão com Socket.IO
   useEffect(() => {
-    // Initialize socket connection
-    const socketInstance = io("http://localhost:3002"); // ✅ make sure to include http
+    const socketInstance = io("http://localhost:3002");
     setSocket(socketInstance);
 
-    // Listen for incoming messages
     socketInstance.on("newMessage", (incomingMessage) => {
-      // Only add if the message is relevant to the current chat
-      if (
+      const isRelevant =
         (incomingMessage.idsender === otherUser &&
           incomingMessage.idreceiver === user) ||
         (incomingMessage.idsender === user &&
-          incomingMessage.idreceiver === otherUser)
-      ) {
+          incomingMessage.idreceiver === otherUser);
+
+      if (isRelevant) {
         setMessages((prev) => [...prev, incomingMessage]);
       }
     });
 
-    // Clean up on unmount
     return () => {
       socketInstance.disconnect();
     };
   }, [user, otherUser]);
 
+  // 🔁 Atualiza mensagens ao mudar o destinatário
   useEffect(() => {
     if (otherUser) {
       getMessages();
     }
   }, [otherUser]);
+
+  // 🧼 Faz scroll automático após mensagens serem renderizadas
+  useLayoutEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
+  }, [messages]);
 
   const getMessages = async () => {
     setLoading(true);
@@ -75,7 +80,6 @@ const FullChat = ({ user, otherUser }) => {
     };
 
     try {
-      // Send to API
       await fetch("https://xuoapi.vercel.app/api/v1/newMessage", {
         method: "POST",
         headers: {
@@ -84,7 +88,6 @@ const FullChat = ({ user, otherUser }) => {
         body: JSON.stringify(payload),
       });
 
-      // Emit via socket
       if (socket) {
         socket.emit("sendMessage", payload);
       }
@@ -110,6 +113,7 @@ const FullChat = ({ user, otherUser }) => {
                 {msg.message}
               </div>
             ))}
+            <div ref={messagesEndRef} /> {/* 🔚 Scroll target */}
           </div>
 
           <div className="input-area">
