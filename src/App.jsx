@@ -1,15 +1,15 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import xuoLogo from "./assets/xuo.png";
-import "./App.css";
-import FullChat from "./molecules/Messages/FullChat";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LoginForm from "./molecules/LoginForm/LoginForm";
 import MessagePage from "./molecules/Messages/MessagePage";
 
 function App() {
   return (
-    <>
-      <MessagePage />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LoginForm />} />
+        <Route path="/mensagens" element={<MessagePage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
