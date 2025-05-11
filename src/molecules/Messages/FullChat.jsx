@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import "./FullChat.scss";
+import { IoIosSend } from "react-icons/io";
+import InputEmoji from "react-input-emoji";
 
 const FullChat = ({ user, otherUser }) => {
   const [message, setMessage] = useState([]);
@@ -63,33 +65,39 @@ const FullChat = ({ user, otherUser }) => {
 
   return (
     <>
-      {!otherUser && <p>Mete o caralho do user</p>}
-      {otherUser && loading && <p>Loading...</p>}
-      {otherUser && !loading && (
-        <div className="chat-container">
-          <div className="messages">
-            {message.map((msg, index) => (
-              <div
-                key={index}
-                className={`message ${msg.idsender === user ? "me" : "other"}`}
-              >
-                {msg.message}
-              </div>
-            ))}
-          </div>
+      <div className="chat-container">
+        {!otherUser && <p>Select a user to show the messages</p>}
+        {otherUser && loading && <div className="loader"></div>}
+        {otherUser && !loading && (
+          <>
+            <div className="messages">
+              {message.map((msg, index) => (
+                <div
+                  key={index}
+                  className={`message ${
+                    msg.idsender === user ? "me" : "other"
+                  }`}
+                >
+                  {msg.message}
+                </div>
+              ))}
+            </div>
 
-          <div className="input-area">
-            <input
-              type="text"
-              placeholder="Digite uma mensagem..."
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleSend()}
-            />
-            <button onClick={handleSend}>Enviar</button>
-          </div>
-        </div>
-      )}
+            <div className="input-area">
+              <InputEmoji
+                value={newMessage}
+                onChange={setNewMessage}
+                cleanOnEnter
+                onEnter={() => {}}
+                placeholder="Type a message"
+              />
+              <button className="btn-submit" onClick={handleSend}>
+                Enviar <IoIosSend />{" "}
+              </button>
+            </div>
+          </>
+        )}
+      </div>
     </>
   );
 };

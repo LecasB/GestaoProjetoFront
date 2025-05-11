@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginForm from "./molecules/LoginForm/LoginForm";
 import MessagePage from "./molecules/Messages/MessagePage";
+import "./App.scss";
 
 function App() {
   return (
