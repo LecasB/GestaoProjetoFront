@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import "./LoginForm.scss";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -39,29 +40,45 @@ const LoginForm = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Login</button>
-      </form>
-
-      {sucess && (
+    <div className="position-center">
+      <div className="loginform">
+        <img src="" alt="" />
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <div>
+            <input type="checkbox" id="remember" />
+            <label htmlFor="remember">Remember mes</label>
+          </div>
+          <button type="submit">Login</button>
+          <div>
+            <Link>Forgot password</Link>
+          </div>
+        </form>
         <div>
-          <h1>Bem vindo {data.name}!</h1>
-          <p onClick={() => navigate("/mensagens")}>Vá até às suas Mensagens</p>
+          <p>If you don’t have an accout please</p>{" "}
+          <Link to="/signup">create account</Link>
         </div>
-      )}
+
+        {sucess && (
+          <div>
+            <h1>Bem vindo {data.name}!</h1>
+            <p onClick={() => navigate("/mensagens")}>
+              Vá até às suas Mensagens
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
