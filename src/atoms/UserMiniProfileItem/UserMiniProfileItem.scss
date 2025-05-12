@@ -1,0 +1,42 @@
+.userMiniProfileItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  background-color: #fff;
+
+  .userInfo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .avatar {
+      font-size: 32px;
+      color: #1f2a37;
+    }
+
+    .name {
+      font-size: 14px;
+      font-weight: 500;
+      color: #333;
+    }
+  }
+
+  .ratingInfo {
+    display: flex;
+    align-items: center;
+
+    .star {
+      color: #fbbf24;
+      font-size: 14px;
+      margin-right: 2px;
+    }
+
+    .reviews {
+      font-size: 13px;
+      color: #666;
+      margin-left: 6px;
+      font-style: italic;
+    }
+  }
+}
