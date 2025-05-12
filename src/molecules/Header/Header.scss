@@ -1,0 +1,185 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #002333;
+  padding: 0.5rem 1.5rem;
+  color: white;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 10;
+
+  .headerLeft {
+    display: flex;
+    align-items: center;
+
+    .logo {
+      width: 40px;
+      height: auto;
+    }
+  }
+
+  .searchBar {
+    display: flex;
+    align-items: center;
+    position: relative;
+    flex: 1;
+    max-width: 500px;
+    margin: 0 2rem;
+    transition: all 0.3s ease;
+
+    input {
+      width: 100%;
+      padding: 0.5rem 2.5rem 0.5rem 0.75rem;
+      border: none;
+      border-radius: 6px;
+      background-color: #d9d9d9;
+      color: #000;
+      font-size: 1rem;
+    }
+
+    .searchIcon {
+      position: absolute;
+      right: 10px;
+      color: #333;
+      pointer-events: none;
+    }
+
+    &.expanded {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: #002333;
+      padding: 0.5rem 1.5rem;
+      z-index: 20;
+      animation: fadeIn 0.3s ease;
+    }
+  }
+
+  .actionIcons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .icon {
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .notificationIcon {
+      position: relative;
+
+      .notificationBadge {
+        position: absolute;
+        top: -6px;
+        right: -6px;
+        background-color: red;
+        color: white;
+        font-size: 0.6rem;
+        font-weight: bold;
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    .avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
+}
+
+/* MOBILE até 430px — só lupa e hamburguer */
+@media (max-width: 430px) {
+  .searchBar {
+    display: none;
+  }
+
+  .searchBar.expanded {
+    display: flex;
+  }
+
+  .actionIcons {
+    .icon {
+      display: none;
+    }
+
+    .searchToggle,
+    .hamburgerMenu {
+      display: block;
+    }
+
+    .avatar,
+    .notificationIcon,
+    .notificationBadge {
+      display: none;
+    }
+  }
+}
+
+/* DRAWER */
+.drawer {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 250px;
+  height: 100vh;
+  background-color: #012a3c;
+  color: white;
+  padding: 1.5rem;
+  transition: right 0.3s ease;
+  z-index: 999;
+
+  &.open {
+    right: 0;
+  }
+
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    li {
+      cursor: pointer;
+      font-size: 1.1rem;
+      border-bottom: 1px solid #ffffff33;
+      padding-bottom: 0.5rem;
+    }
+  }
+}
+
+.drawerOverlay {
+  display: none;
+
+  &.active {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 998;
+  }
+}
+
+/* Animação */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
