@@ -1,0 +1,322 @@
+.headerWrapper {
+  min-height: 60px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #002333;
+  padding: 0.5rem 1.5rem;
+  color: white;
+  width: 100%;
+  box-sizing: border-box;
+
+  .headerLeft,
+  .headerRight {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    .logo {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+
+    .searchToggle {
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: white;
+    }
+  }
+
+  .circleButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #0e3b4f;
+    cursor: pointer;
+
+    &.small {
+      width: 36px;
+      height: 36px;
+
+      svg {
+        font-size: 1.5rem;
+      }
+    }
+
+    &.large {
+      width: 60px;
+      height: 60px;
+
+      .drawerCloseIcon {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  }
+
+  .searchBar {
+    display: flex;
+    align-items: center;
+    position: relative;
+    flex: 1;
+    max-width: 500px;
+    margin: 0 2rem;
+
+    input {
+      width: 100%;
+      padding: 0.5rem 2.5rem 0.5rem 0.75rem;
+      border: none;
+      border-radius: 6px;
+      background-color: #d9d9d9;
+      color: #000;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .searchIcon {
+      position: absolute;
+      right: 35px;
+      color: #333;
+    }
+
+    .filterIcon {
+      position: absolute;
+      right: 10px;
+      color: #333;
+      cursor: pointer;
+    }
+  }
+
+  .actionIcons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .icon {
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .notificationIcon {
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      .notificationBadge {
+        position: absolute;
+        top: -4px;
+        right: -6px;
+        background-color: red;
+        color: white;
+        font-size: 0.6rem;
+        font-weight: bold;
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    .avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
+}
+
+.mobileSearchHeader {
+  background-color: #002333;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1000;
+  animation: fadeDown 0.3s ease forwards;
+
+  &.hide {
+    animation: fadeUp 0.3s ease forwards;
+  }
+
+  .searchWrapper {
+    flex: 1;
+    background-color: #d9d9d9;
+    display: flex;
+    align-items: center;
+    border-radius: 6px;
+    padding: 0 0.5rem;
+
+    input {
+      flex: 1;
+      padding: 0.5rem;
+      border: none;
+      background: transparent;
+      color: #000;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .iconsRight {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      .searchIcon,
+      .filterIcon {
+        font-size: 1.2rem;
+        color: #333;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .closeSearchIcon {
+    font-size: 1.8rem;
+    margin-left: 1rem;
+    color: white;
+    cursor: pointer;
+  }
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #012a3c;
+  color: white;
+  padding: 2rem 1rem;
+  z-index: 999;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &.open {
+    display: flex;
+    animation: drawerSlideIn 0.3s ease forwards;
+  }
+
+  &.closing {
+    animation: drawerSlideOut 0.3s ease forwards;
+  }
+
+  .drawerHeader {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    display: flex;
+    justify-content: space-between;
+    width: calc(100% - 2rem);
+
+    .drawerLogo {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+  }
+
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+
+    li {
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #ffffff33;
+      width: 100%;
+      text-align: center;
+
+      &:hover {
+        background-color: #01364a;
+      }
+    }
+  }
+}
+
+.drawerOverlay {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 998;
+  animation: fadeIn 0.3s ease;
+}
+
+.drawerCloseIcon {
+  color: white;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+}
+
+/* Animations */
+@keyframes drawerSlideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes drawerSlideOut {
+  from {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
