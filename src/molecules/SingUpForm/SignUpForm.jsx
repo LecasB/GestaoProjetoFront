@@ -32,9 +32,9 @@ const SignUpForm = () => {
 
     if (!formData.password) {
       errors.push("Senha é obrigatória.");
-    } /* else if (formData.password.length < 6) {
+    } else if (formData.password.length < 6) {
       errors.push("A senha deve ter no mínimo 6 caracteres.");
-    } */
+    }
 
     if (!formData.confirmPassword) {
       errors.push("Confirmação da senha é obrigatória.");
