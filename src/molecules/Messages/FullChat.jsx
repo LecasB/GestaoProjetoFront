@@ -121,7 +121,7 @@ const FullChat = ({ user, otherUser }) => {
               value={newMessage}
               onChange={setNewMessage}
               cleanOnEnter
-              onEnter={() => {}}
+              onEnter={handleSend}
               placeholder="Type a message"
             />
             <button className="btn-submit" onClick={handleSend}>
