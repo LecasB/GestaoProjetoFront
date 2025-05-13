@@ -49,8 +49,10 @@
     margin-right: 8px;
   }
   
+  
   .social-icons a {
     margin-right: 10px;
+    color: white;
   }
   
   .social-icons img {
@@ -67,3 +69,20 @@
     height: 100px;
     width: 100px;
   }
+
+  @media (max-width: 600px) {
+  .footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    max-width: 1200px;
+    margin: auto;
+    flex-direction: column;
+  }
+  .footer-right{
+    margin-left: 40px;
+  }
+  }
+
+  
