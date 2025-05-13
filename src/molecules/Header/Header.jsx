@@ -1,13 +1,14 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "./Header.scss";
 import {
   FaSearch,
-  FaFilter,
   FaPlus,
   FaBell,
   FaCommentDots,
-  FaBars,
+  FaFilter,
 } from "react-icons/fa";
+import { RxCrossCircled } from "react-icons/rx";
+import { HiMenuAlt1 } from "react-icons/hi";
 import logo from "../../../public/imgs/xuo.png";
 import profilePic from "../../../public/imgs/ronaldo.jpg";
 
@@ -15,7 +16,8 @@ const Header = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 430);
   const [showSearch, setShowSearch] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const drawerRef = useRef(null);
+  const [closingDrawer, setClosingDrawer] = useState(false);
+  const [closingSearch, setClosingSearch] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 430);
@@ -23,86 +25,97 @@ const Header = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // FECHAR O DRAWER AO CLICAR FORA
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (drawerRef.current && !drawerRef.current.contains(e.target)) {
-        setDrawerOpen(false);
-      }
-    };
+  const handleDrawerClose = () => {
+    setClosingDrawer(true);
+    setTimeout(() => {
+      setDrawerOpen(false);
+      setClosingDrawer(false);
+    }, 300);
+  };
 
-    if (drawerOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [drawerOpen]);
+  const handleSearchClose = () => {
+    setClosingSearch(true);
+    setTimeout(() => {
+      setShowSearch(false);
+      setClosingSearch(false);
+    }, 300);
+  };
 
   return (
     <>
-      {isMobile && drawerOpen && (
-        <div className="drawerOverlay" onClick={() => setDrawerOpen(false)} />
-      )}
-
-      <header className="header">
-        <div className="headerLeft">
-          <img src={logo} alt="XUO Logo" className="logo" />
-        </div>
-
-        {!isMobile && (
-          <div className="searchBar">
-            <input type="text" placeholder="Search..." />
-            <FaSearch className="searchIcon" />
-          </div>
-        )}
-
-        {isMobile && showSearch && (
-          <div className="searchBar expanded">
-            <input type="text" placeholder="Search..." autoFocus />
-          </div>
-        )}
-
-        <div className="actionIcons">
-          {!isMobile && (
-            <>
-              <FaFilter className="icon" />
-              <FaPlus className="icon" />
-              <div className="notificationIcon">
-                <FaBell className="icon" />
-                <span className="notificationBadge">3</span>
+      <div className="headerWrapper">
+        {isMobile && showSearch ? (
+          <div className={`mobileSearchHeader ${closingSearch ? "hide" : ""}`}>
+            <div className="searchWrapper">
+              <input type="text" placeholder="Pesquisar..." autoFocus />
+              <div className="iconsRight">
+                <FaSearch className="searchIcon" />
+                <FaFilter className="filterIcon" />
               </div>
-              <FaCommentDots className="icon" />
-              <img src={profilePic} alt="User avatar" className="avatar" />
-            </>
-          )}
+            </div>
+            <RxCrossCircled
+              className="closeSearchIcon"
+              onClick={handleSearchClose}
+            />
+          </div>
+        ) : (
+          <header className="header">
+            <div className="headerLeft">
+              {isMobile ? (
+                <div className="circleButton small" onClick={() => setDrawerOpen(true)}>
+                  <HiMenuAlt1 />
+                </div>
+              ) : (
+                <img src={logo} alt="XUO Logo" className="logo" />
+              )}
+            </div>
 
-          {isMobile && (
-            <>
-              <FaSearch
-                className="icon searchToggle"
-                onClick={() => setShowSearch((prev) => !prev)}
-              />
-              <FaBars
-                className="icon hamburgerMenu"
-                onClick={() => setDrawerOpen(true)}
-              />
-            </>
-          )}
-        </div>
-      </header>
+            {!isMobile && (
+              <div className="searchBar">
+                <input type="text" placeholder="Pesquisar..." />
+                <FaSearch className="searchIcon" />
+                <FaFilter className="filterIcon" />
+              </div>
+            )}
+
+            <div className="headerRight">
+              {isMobile ? (
+                <FaSearch className="icon searchToggle" onClick={() => setShowSearch(true)} />
+              ) : (
+                <div className="actionIcons">
+                  <FaPlus className="icon" />
+                  <div className="notificationIcon">
+                    <FaBell className="icon" />
+                    <span className="notificationBadge">3</span>
+                  </div>
+                  <FaCommentDots className="icon" />
+                  <img src={profilePic} alt="User avatar" className="avatar" />
+                </div>
+              )}
+              {isMobile && <img src={logo} alt="XUO Logo" className="logo" />}
+            </div>
+          </header>
+        )}
+      </div>
+
+      {isMobile && drawerOpen && <div className="drawerOverlay" onClick={handleDrawerClose} />}
 
       {isMobile && (
-        <div ref={drawerRef} className={`drawer ${drawerOpen ? "open" : ""}`}>
+        <div
+          className={`drawer ${drawerOpen ? "open" : ""} ${closingDrawer ? "closing" : ""}`}
+        >
+          <div className="drawerHeader">
+            <div className="circleButton large closeButton" onClick={handleDrawerClose}>
+              <RxCrossCircled className="drawerCloseIcon" />
+            </div>
+            <img src={logo} alt="XUO Logo" className="drawerLogo" />
+          </div>
           <ul>
             <li>Início</li>
             <li>Vender</li>
             <li>Notificações</li>
             <li>Mensagens</li>
-            <li>Profile</li>
+            <li>Perfil</li>
           </ul>
         </div>
       )}
