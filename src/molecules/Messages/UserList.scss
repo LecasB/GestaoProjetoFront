@@ -1,0 +1,28 @@
+.list {
+  display: flex;
+  width: 20%;
+  background-color: red;
+  flex-direction: column;
+  position: relative;
+  height: 100vh;
+
+  .user {
+    cursor: pointer;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    width: 100%;
+    background: rgb(187, 187, 187);
+    gap: 10px;
+    border: 1px solid black;
+
+    &:hover {
+      background-color: gray;
+    }
+    img {
+      width: 50px;
+      height: auto;
+      border-radius: 50%;
+    }
+  }
+}

@@ -1,19 +1,19 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import xuoLogo from "./assets/xuo.png";
-import "./App.css";
-import Footer from "./molecules/footer";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import LoginForm from "./molecules/LoginForm/LoginForm";
+import MessagePage from "./molecules/Messages/MessagePage";
+import "./App.scss";
+import SignUpForm from "./molecules/SingUpForm/SignUpForm";
 
 function App() {
-  
-
   return (
-    <>
-    <Footer>
-      
-    </Footer>
-
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route index path="/login" element={<LoginForm />} />
+        <Route path="/signup" element={<SignUpForm />} />
+        <Route path="/mensagens" element={<MessagePage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

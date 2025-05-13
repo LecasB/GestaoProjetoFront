@@ -1,0 +1,27 @@
+.reportButton {
+    display: inline-flex;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    background-color: #fff; 
+
+  
+    .text {
+      font-size: 16px;
+      text-decoration: underline;
+      color: #000;
+    }
+  
+    .icon {
+      font-size: 20px;
+      color: #000;
+    }
+  
+    &:focus {
+      outline: 2px solid #000;
+      outline-offset: 2px;
+    }
+  }
+  
