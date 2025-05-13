@@ -1,0 +1,46 @@
+.cmp-login {
+  &_video-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  &_container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url();
+
+    &_form {
+      z-index: 1;
+      height: fit-content;
+      width: 600px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      color: white;
+      border: 1px solid white;
+      background: rgba($color: #000000, $alpha: 0.9);
+
+      &_logo {
+        width: 200px;
+        height: 200px;
+      }
+
+      a {
+        color: white;
+      }
+
+      &_textinput {
+        width: 100%;
+        max-width: 400px;
+      }
+    }
+  }
+}
