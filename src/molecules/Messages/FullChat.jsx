@@ -13,7 +13,7 @@ const FullChat = ({ user, otherUser }) => {
 
   // 🔌 Conexão com Socket.IO
   useEffect(() => {
-    const socketInstance = io("http://localhost:3002");
+    const socketInstance = io("https://xuosocket-production.up.railway.app/");
     setSocket(socketInstance);
 
     socketInstance.on("newMessage", (incomingMessage) => {
