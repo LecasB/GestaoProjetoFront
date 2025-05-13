@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import ErrorToast from "./ErrorToast";
+import { useNavigate } from "react-router-dom";
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +10,8 @@ const SignUpForm = () => {
     password: "",
     confirmPassword: "",
   });
+
+  const navigate = useNavigate();
 
   const [toastErrors, setToastErrors] = useState([]);
 
@@ -29,9 +32,9 @@ const SignUpForm = () => {
 
     if (!formData.password) {
       errors.push("Senha é obrigatória.");
-    } else if (formData.password.length < 6) {
+    } /* else if (formData.password.length < 6) {
       errors.push("A senha deve ter no mínimo 6 caracteres.");
-    }
+    } */
 
     if (!formData.confirmPassword) {
       errors.push("Confirmação da senha é obrigatória.");
@@ -57,8 +60,9 @@ const SignUpForm = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            email: email,
-            password: password,
+            username: formData.username,
+            email: formData.email,
+            password: formData.password,
           }),
         });
 
@@ -68,6 +72,7 @@ const SignUpForm = () => {
           // Erros do servidor (ex: 400, 401, 500...)
           setToastErrors(jsonData.message || "Erro ao cadastrar.");
         }
+        navigate("/login");
         setToastErrors([]);
       } catch (error) {
         setToastErrors("Erro no servido.");
