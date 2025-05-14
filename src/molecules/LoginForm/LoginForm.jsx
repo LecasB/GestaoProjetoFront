@@ -61,7 +61,7 @@ const LoginForm = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <div>
+        <div className="cmp-login_container_form_remember">
           <input
             type="checkbox"
             id="remember"
@@ -69,14 +69,16 @@ const LoginForm = () => {
           />
           <label htmlFor="remember">Remember me</label>
         </div>
-        <button type="submit">Login</button>
-        <div>
-          <Link>Forgot password</Link>
+        <button type="submit">LOGIN</button>
+        <div className="cmp-login_container_form_forgot">
+          <Link to="#">Forgot password</Link>
         </div>
-        <p>
-          If you don’t have an accout please{" "}
-          <Link to="/signup">create account</Link>
-        </p>{" "}
+        <div className="cmp-login_container_form_footer">
+          <p>
+            If you don’t have an account please{" "}
+            <Link to="/signup">create account</Link>
+          </p>
+        </div>
         {sucess && (
           <div>
             <h1>Bem vindo {data.name}!</h1>
