@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ErrorToast from "./ErrorToast";
-import { useNavigate } from "react-router-dom";
+import "./SignUpForm.scss";
+import XuoPng from "../../assets/xuo.png";
+import XuoBackgroundVid from "../../assets/xuovideobg.mp4";
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
@@ -12,7 +14,6 @@ const SignUpForm = () => {
   });
 
   const navigate = useNavigate();
-
   const [toastErrors, setToastErrors] = useState([]);
 
   const handleChange = (e) => {
@@ -69,27 +70,29 @@ const SignUpForm = () => {
         const jsonData = await res.json();
 
         if (!res.ok) {
-          // Erros do servidor (ex: 400, 401, 500...)
-          setToastErrors(jsonData.message || "Erro ao cadastrar.");
+          setToastErrors([jsonData.message || "Erro ao cadastrar."]);
+          return;
         }
+
         navigate("/login");
-        setToastErrors([]);
       } catch (error) {
-        setToastErrors("Erro no servido.");
-        setToastErrors([]);
+        setToastErrors(["Erro no servidor."]);
       }
     }
   };
 
   return (
-    <div>
+    <div className="cmp-register_container">
       <ErrorToast messages={toastErrors} onClose={() => setToastErrors([])} />
 
-      <form onSubmit={handleSubmit}>
+      <form className="cmp-register_container_form" onSubmit={handleSubmit}>
+        <img src={XuoPng} alt="logo" className="cmp-register_container_form_logo" />
+
         <input
           type="text"
           name="username"
           placeholder="Username"
+          className="cmp-register_container_form_textinput"
           value={formData.username}
           onChange={handleChange}
         />
@@ -98,6 +101,7 @@ const SignUpForm = () => {
           type="email"
           name="email"
           placeholder="Email"
+          className="cmp-register_container_form_textinput"
           value={formData.email}
           onChange={handleChange}
         />
@@ -106,6 +110,7 @@ const SignUpForm = () => {
           type="password"
           name="password"
           placeholder="Password"
+          className="cmp-register_container_form_textinput"
           value={formData.password}
           onChange={handleChange}
         />
@@ -114,17 +119,24 @@ const SignUpForm = () => {
           type="password"
           name="confirmPassword"
           placeholder="Confirme Password"
+          className="cmp-register_container_form_textinput"
           value={formData.confirmPassword}
           onChange={handleChange}
         />
 
-        <button type="submit">Sign Up</button>
+        <button type="submit">SIGN UP</button>
+
+        <div className="cmp-register_container_form_footer">
+          <p>
+            Already have an account?{" "}
+            <Link to="/login">Login</Link>
+          </p>
+        </div>
       </form>
 
-      <div>
-        <p>Have an account already?</p>
-        <Link to="/login">Login</Link>
-      </div>
+      <video autoPlay muted loop playsInline className="cmp-register_video-bg">
+        <source src={XuoBackgroundVid} type="video/mp4" />
+      </video>
     </div>
   );
 };
