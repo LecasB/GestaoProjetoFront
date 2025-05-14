@@ -11,8 +11,12 @@ import { RxCrossCircled } from "react-icons/rx";
 import { HiMenuAlt1 } from "react-icons/hi";
 import logo from "../../../public/imgs/xuo.png";
 import profilePic from "../../../public/imgs/ronaldo.jpg";
+import { Link } from "react-router-dom";
 
 const Header = () => {
+  const [isLogin, setIsLogin] = useState(() => {
+    return sessionStorage.getItem("id") !== null;
+  });
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 430);
   const [showSearch, setShowSearch] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -62,7 +66,10 @@ const Header = () => {
           <header className="header">
             <div className="headerLeft">
               {isMobile ? (
-                <div className="circleButton small" onClick={() => setDrawerOpen(true)}>
+                <div
+                  className="circleButton small"
+                  onClick={() => setDrawerOpen(true)}
+                >
                   <HiMenuAlt1 />
                 </div>
               ) : (
@@ -80,16 +87,33 @@ const Header = () => {
 
             <div className="headerRight">
               {isMobile ? (
-                <FaSearch className="icon searchToggle" onClick={() => setShowSearch(true)} />
+                <FaSearch
+                  className="icon searchToggle"
+                  onClick={() => setShowSearch(true)}
+                />
               ) : (
                 <div className="actionIcons">
                   <FaPlus className="icon" />
                   <div className="notificationIcon">
                     <FaBell className="icon" />
-                    <span className="notificationBadge">3</span>
                   </div>
-                  <FaCommentDots className="icon" />
-                  <img src={profilePic} alt="User avatar" className="avatar" />
+                  <Link to="/mensagens" className="messagesIcon">
+                    <FaCommentDots className="icon" />
+                  </Link>
+                  <Link
+                    to={isLogin ? "/profile" : "/login"}
+                    className="messagesIcon"
+                  >
+                    <img
+                      src={
+                        isLogin
+                          ? profilePic
+                          : "https://i.ibb.co/chLJhfGz/default-icon.jpg"
+                      }
+                      alt="User avatar"
+                      className="avatar"
+                    />
+                  </Link>
                 </div>
               )}
               {isMobile && <img src={logo} alt="XUO Logo" className="logo" />}
@@ -98,14 +122,21 @@ const Header = () => {
         )}
       </div>
 
-      {isMobile && drawerOpen && <div className="drawerOverlay" onClick={handleDrawerClose} />}
+      {isMobile && drawerOpen && (
+        <div className="drawerOverlay" onClick={handleDrawerClose} />
+      )}
 
       {isMobile && (
         <div
-          className={`drawer ${drawerOpen ? "open" : ""} ${closingDrawer ? "closing" : ""}`}
+          className={`drawer ${drawerOpen ? "open" : ""} ${
+            closingDrawer ? "closing" : ""
+          }`}
         >
           <div className="drawerHeader">
-            <div className="circleButton large closeButton" onClick={handleDrawerClose}>
+            <div
+              className="circleButton large closeButton"
+              onClick={handleDrawerClose}
+            >
               <RxCrossCircled className="drawerCloseIcon" />
             </div>
             <img src={logo} alt="XUO Logo" className="drawerLogo" />

@@ -32,6 +32,7 @@ const LoginForm = () => {
 
       if (jsonData.id) {
         sessionStorage.setItem("id", jsonData.id);
+        sessionStorage.setItem("name", jsonData.name);
       }
 
       setSucess(true);
@@ -79,9 +80,7 @@ const LoginForm = () => {
         {sucess && (
           <div>
             <h1>Bem vindo {data.name}!</h1>
-            <p onClick={() => navigate("/mensagens")}>
-              Vá até às suas Mensagens
-            </p>
+            <p onClick={() => navigate("/index")}>Vá ate ao website</p>
           </div>
         )}
       </form>

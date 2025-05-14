@@ -37,10 +37,10 @@ const MessagePage = () => {
   };
 
   return (
-    <>
+    <div className="messagePage" style={{ display: "flex" }}>
       <UserList list={userList} handleClick={handleClick} />
       <FullChat user={user} otherUser={selectUser} />
-    </>
+    </div>
   );
 };
 

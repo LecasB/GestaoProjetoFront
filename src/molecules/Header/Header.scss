@@ -106,22 +106,11 @@
       position: relative;
       display: flex;
       align-items: center;
+    }
 
-      .notificationBadge {
-        position: absolute;
-        top: -4px;
-        right: -6px;
-        background-color: red;
-        color: white;
-        font-size: 0.6rem;
-        font-weight: bold;
-        border-radius: 50%;
-        width: 16px;
-        height: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
+    .messagesIcon {
+      display: flex;
+      color: white;
     }
 
     .avatar {
@@ -195,6 +184,7 @@
   background-color: #012a3c;
   color: white;
   padding: 2rem 1rem;
+  box-sizing: border-box;
   z-index: 999;
   display: none;
   flex-direction: column;
@@ -226,6 +216,7 @@
   }
 
   ul {
+    padding: 0;
     list-style: none;
     display: flex;
     flex-direction: column;
