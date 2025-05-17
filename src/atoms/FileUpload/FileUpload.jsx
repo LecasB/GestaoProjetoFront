@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 const FileUpload = () => {
   const [selectedFile, setSelectedFile] = useState(null);
-  const userId = "681fe00d8ff84f652a0dfb03"; // substitui pelo ID real do utilizador
+  const userId = ""; // substitui pelo ID real do utilizador
 
   // Guarda o ficheiro diretamente, sem converter em base64
   const handlePhoto = (e) => {
