@@ -1,23 +1,25 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import xuoLogo from "./assets/xuo.png";
-import "./App.css";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import LoginForm from "./molecules/LoginForm/LoginForm";
+import MessagePage from "./molecules/Messages/MessagePage";
+import "./App.scss";
+import SignUpForm from "./molecules/SingUpForm/SignUpForm";
+import Layout from "./molecules/Layout/Layout";
+import TestPage from "./organisms/TestPage";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <div>
-        <img src={xuoLogo} className="logo" alt="Vite logo" />
-      </div>
-      <h1>Best Market Place 🚫 🧢</h1>
-      <a href="https://xuoapi.vercel.app/">
-        <marquee behavior="scroll" direction="left" scrollamount="10">
-          Aceda a API aqui!
-        </marquee>
-      </a>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route index path="/login" element={<LoginForm />} />
+        <Route path="/signup" element={<SignUpForm />} />
+        <Route path="/mensagens" element={<MessagePage />} />
+
+        <Route path="/" element={<Layout />}>
+          <Route path="/index" element={<TestPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
