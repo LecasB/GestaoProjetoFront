@@ -1,49 +1,54 @@
-import react from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 
 const FileUpload = () => {
-  const [photo, setPhoto] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
+  const userId = "681fe00d8ff84f652a0dfb03"; // substitui pelo ID real do utilizador
 
+  // Guarda o ficheiro diretamente, sem converter em base64
   const handlePhoto = (e) => {
     const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      console.log(reader.result);
-      setPhoto(reader.result.split(",")[1]);
-    };
+    setSelectedFile(file);
   };
 
-  const handleUpload = async () => {
-    fetch(
-      `https://api.imgbb.com/1/upload?key=4bfa5b7a1289f21e23d4e44c2c8e68c9`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: new URLSearchParams({
-          image: photo,
-          name: `${sessionStorage.getItem("id")}_avatar`,
-        }),
+  const handleSubmit = async () => {
+    if (!selectedFile) {
+      alert("Por favor, escolhe uma imagem antes de enviar.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("id", userId);
+    formData.append("photo", selectedFile);
+    console.log(formData);
+
+    try {
+      // Endpoint local (comenta e descomenta conforme necessário)
+      //const response = await fetch("http://localhost:3000/api/v1/user/updateImage", {
+      const response = await fetch(
+        "https://xuoapi.vercel.app/api/v1/user/updateImage",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Erro no upload da imagem");
       }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setPhoto("");
-      })
-      .catch((err) => console.error(err));
+
+      const data = await response.json();
+      console.log("Upload realizado com sucesso:", data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <div className="file-upload">
       <input type="file" id="file" onChange={handlePhoto} />
       <label htmlFor="file">Upload File</label>
-      <button onClick={handleUpload}>Save</button>
+      <button onClick={handleSubmit}>Save</button>
     </div>
-
-    //
   );
 };
 
