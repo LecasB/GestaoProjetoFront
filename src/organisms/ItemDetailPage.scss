@@ -1,0 +1,21 @@
+.cmp-item-detail-page {
+  &__item-detail {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+
+    @media screen and (max-width: 930px) {
+      flex-direction: column;
+    }
+
+    &--description {
+      max-width: 500px;
+
+      &--price-and-report {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+  }
+}
