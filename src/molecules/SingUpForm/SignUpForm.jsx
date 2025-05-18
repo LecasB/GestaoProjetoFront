@@ -13,6 +13,10 @@ const SignUpForm = () => {
     confirmPassword: "",
   });
 
+  useEffect(() => {
+    sessionStorage.clear();
+  }, []);
+
   const navigate = useNavigate();
   const [toastErrors, setToastErrors] = useState([]);
 
@@ -86,7 +90,11 @@ const SignUpForm = () => {
       <ErrorToast messages={toastErrors} onClose={() => setToastErrors([])} />
 
       <form className="cmp-register_container_form" onSubmit={handleSubmit}>
-        <img src={XuoPng} alt="logo" className="cmp-register_container_form_logo" />
+        <img
+          src={XuoPng}
+          alt="logo"
+          className="cmp-register_container_form_logo"
+        />
 
         <input
           type="text"
@@ -128,8 +136,7 @@ const SignUpForm = () => {
 
         <div className="cmp-register_container_form_footer">
           <p>
-            Already have an account?{" "}
-            <Link to="/login">Login</Link>
+            Already have an account? <Link to="/login">Login</Link>
           </p>
         </div>
       </form>
