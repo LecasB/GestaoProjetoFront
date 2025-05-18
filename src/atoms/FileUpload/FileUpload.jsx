@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const FileUpload = () => {
   const [selectedFile, setSelectedFile] = useState(null);
-  const userId = ""; // substitui pelo ID real do utilizador
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    setUserId(sessionStorage.getItem("id") || null);
+  }, []);
 
   // Guarda o ficheiro diretamente, sem converter em base64
   const handlePhoto = (e) => {
@@ -23,18 +27,14 @@ const FileUpload = () => {
 
     try {
       // Endpoint local (comenta e descomenta conforme necessário)
-      //const response = await fetch("http://localhost:3000/api/v1/user/updateImage", {
+      //const response = await fetch("https://xuoapi.vercel.app/api/v1/user/updateImage",{
       const response = await fetch(
-        "https://xuoapi.vercel.app/api/v1/user/updateImage",
+        "http://localhost:3000/api/v1/user/updateImage",
         {
           method: "POST",
           body: formData,
         }
       );
-
-      if (!response.ok) {
-        throw new Error("Erro no upload da imagem");
-      }
 
       const data = await response.json();
       console.log("Upload realizado com sucesso:", data);
@@ -44,11 +44,15 @@ const FileUpload = () => {
   };
 
   return (
-    <div className="file-upload">
-      <input type="file" id="file" onChange={handlePhoto} />
-      <label htmlFor="file">Upload File</label>
-      <button onClick={handleSubmit}>Save</button>
-    </div>
+    <>
+      {userId && (
+        <div className="file-upload">
+          <input type="file" id="file" onChange={handlePhoto} />
+          <label htmlFor="file">Upload File</label>
+          <button onClick={handleSubmit}>Save</button>
+        </div>
+      )}
+    </>
   );
 };
 

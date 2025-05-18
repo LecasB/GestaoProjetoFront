@@ -35,7 +35,7 @@ const LoginForm = () => {
         }),
       });
 
-      const jsonData = res.json();
+      const jsonData = await res.json();
 
       setData(jsonData);
 
