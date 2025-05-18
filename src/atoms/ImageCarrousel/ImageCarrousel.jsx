@@ -1,14 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ImageCarrousel.scss";
 
-const images = [
-  "/imgs/ronaldo.jpg",
-  "/imgs/ronaldo2.jpg",
-  "/imgs/ronaldo3.jpg",
-];
-
-const ImageCarrousel = () => {
+const ImageCarrousel = ({ images }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [imagesList, setImagesList] = useState([
+    "/imgs/ronaldo.jpg",
+    "/imgs/ronaldo2.jpg",
+    "/imgs/ronaldo3.jpg",
+  ]);
 
   const nextImage = () => {
     setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -18,15 +17,22 @@ const ImageCarrousel = () => {
     setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
   };
 
+  useEffect(() => {
+    console.log(images);
+    setImagesList(images);
+  }, [images]);
+
   return (
     <div className="image-carrousel">
-      <button onClick={prevImage} className="image-carrousel__button">‹</button>
+      <button onClick={prevImage} className="image-carrousel__button">
+        ‹
+      </button>
 
       <div
         className="image-carrousel__slider"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
-        {images.map((src, index) => (
+        {imagesList.map((src, index) => (
           <img
             key={index}
             src={src}
@@ -37,16 +43,20 @@ const ImageCarrousel = () => {
       </div>
 
       <div className="image-carrousel__dots">
-        {images.map((_, index) => (
+        {imagesList.map((_, index) => (
           <span
             key={index}
-            className={`image-carrousel__dot ${index === currentIndex ? "active" : ""}`}
+            className={`image-carrousel__dot ${
+              index === currentIndex ? "active" : ""
+            }`}
             onClick={() => setCurrentIndex(index)}
           />
         ))}
       </div>
 
-      <button onClick={nextImage} className="image-carrousel__button">›</button>
+      <button onClick={nextImage} className="image-carrousel__button">
+        ›
+      </button>
     </div>
   );
 };

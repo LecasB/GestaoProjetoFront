@@ -1,10 +1,14 @@
 .image-carrousel {
   position: relative;
-  width: 573px;
-  height: 395px;
+  max-width: 573px;
+  max-height: 395px;
   overflow: hidden;
   border-radius: 8px;
   background: #fff;
+
+  @media screen and (max-width: 930px) {
+    max-width: 100%;
+  }
 
   &__slider {
     display: flex;
