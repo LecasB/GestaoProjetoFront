@@ -1,0 +1,50 @@
+.cmp-profile-page {
+  display: flex;
+  width: 100%;
+  padding: 20px 10px;
+  box-sizing: border-box;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  &__avatar {
+    width: 20%;
+    min-width: 250px;
+
+    &--image {
+      min-width: 250px;
+      min-height: 250px;
+      height: 250px;
+      width: 250px;
+      border-radius: 50%;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+
+    &__top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      &__userNstars {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+    }
+
+    &__middle {
+      display: flex;
+      max-width: 400px;
+      justify-content: space-around;
+    }
+
+    &__description {
+      padding: 0px 0px 0px 20px;
+    }
+  }
+}

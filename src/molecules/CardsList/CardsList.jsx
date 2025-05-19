@@ -1,19 +1,17 @@
 import { useEffect, useState } from "react";
 import CardItem from "../../atoms/CardItem/CardItem";
 import "./CardsList.scss";
-const CardsList = () => {
+const CardsList = ({ id }) => {
   const user = JSON.parse(localStorage.getItem(""));
 
   const [items, setItems] = useState([]);
 
-  useEffect(() => {
-    getItems();
-  }, []);
-
-  const getItems = async () => {
+  const getItems = async (id) => {
     try {
       const resposta = await fetch(
-        "https://xuoapi.azurewebsites.net/api/v1/items"
+        id
+          ? `https://xuoapi.azurewebsites.net/api/v1/items/user/${id}`
+          : `https://xuoapi.azurewebsites.net/api/v1/items`
       );
       setItems(await resposta.json());
     } catch (error) {
@@ -21,10 +19,13 @@ const CardsList = () => {
     }
   };
 
+  useEffect(() => {
+    if (id) getItems(id);
+    else getItems();
+  }, [id]);
+
   return (
     <>
-      <h2 className="recomendados">Recomendados</h2>
-
       <div className="conjunto-cards">
         {items.map((item, key) => (
           <CardItem
