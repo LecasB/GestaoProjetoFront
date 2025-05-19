@@ -11,7 +11,7 @@ import { RxCrossCircled } from "react-icons/rx";
 import { HiMenuAlt1 } from "react-icons/hi";
 import logo from "../../../public/imgs/xuo.png";
 import profilePic from "../../../public/imgs/ronaldo.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [isLogin, setIsLogin] = useState(() => {
@@ -23,6 +23,7 @@ const Header = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [closingDrawer, setClosingDrawer] = useState(false);
   const [closingSearch, setClosingSearch] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     handleUserInfo();
@@ -93,7 +94,12 @@ const Header = () => {
                   <HiMenuAlt1 />
                 </div>
               ) : (
-                <img src={logo} alt="XUO Logo" className="logo" />
+                <img
+                  src={logo}
+                  alt="XUO Logo"
+                  className="logo"
+                  onClick={() => navigate("/index")}
+                />
               )}
             </div>
 
