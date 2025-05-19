@@ -27,7 +27,7 @@ const FileUpload = () => {
 
     try {
       // Endpoint local (comenta e descomenta conforme necessário)
-      //const response = await fetch("https://xuoapi.vercel.app/api/v1/user/updateImage",{
+      //const response = await fetch("https://xuoapi.azurewebsites.net/api/v1/user/updateImage",{
       const response = await fetch(
         "http://localhost:3000/api/v1/user/updateImage",
         {

@@ -24,7 +24,7 @@ const LoginForm = () => {
     event.preventDefault();
     try {
       setLoading(true);
-      const res = await fetch("https://xuoapi.vercel.app/api/v1/login", {
+      const res = await fetch("https://xuoapi.azurewebsites.net/api/v1/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -48,7 +48,7 @@ const LoginForm = () => {
 
       navigate("/index");
     } catch (err) {
-      console.error("Erro ao buscar mensagens:", err);
+      console.error("Erro ao buscar mensagens:", err.message);
       setToastErrors(["User não encontrado."]);
     }
 

@@ -7,6 +7,8 @@ import FileUpload from "./atoms/FileUpload/FileUpload";
 import Layout from "./molecules/Layout/Layout";
 import TestPage from "./organisms/TestPage";
 import UpdateProfileForm from "./molecules/UpdateProfileForm/UpdateProfileForm";
+import ItemDetailPage from "./organisms/ItemDetailPage";
+import UploadItemPage from "./organisms/UploadItemPage";
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
 
         <Route path="/" element={<Layout />}>
           <Route path="/index" element={<TestPage />} />
+          <Route path="/item" element={<ItemDetailPage />} />
+          <Route path="/newItem" element={<UploadItemPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

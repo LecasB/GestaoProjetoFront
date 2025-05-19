@@ -59,17 +59,20 @@ const SignUpForm = () => {
     } else {
       setToastErrors([]);
       try {
-        const res = await fetch("https://xuoapi.vercel.app/api/v1/signup", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username: formData.username,
-            email: formData.email,
-            password: formData.password,
-          }),
-        });
+        const res = await fetch(
+          "https://xuoapi.azurewebsites.net/api/v1/signup",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: formData.username,
+              email: formData.email,
+              password: formData.password,
+            }),
+          }
+        );
 
         const jsonData = await res.json();
 

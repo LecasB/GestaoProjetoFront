@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { FaStar, FaStarHalfAlt, FaRegStar, FaUserCircle } from "react-icons/fa";
 import "./UserMiniProfileItem.scss";
 
-const UserMiniProfileItem = ({ id = "681fdfed8ff84f652a0dfb01" }) => {
+const UserMiniProfileItem = ({ id }) => {
   const [userDetails, setUserDetails] = useState("");
 
   const getUserInfo = async () => {
-    fetch(`https://xuoapi.vercel.app/api/v1/user/${id}`)
+    fetch(`https://xuoapi.azurewebsites.net/api/v1/user/${id}`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -19,7 +19,7 @@ const UserMiniProfileItem = ({ id = "681fdfed8ff84f652a0dfb01" }) => {
 
   useEffect(() => {
     getUserInfo();
-  }, [id]);
+  }, []);
 
   const rating = 5;
   const renderStars = () => {
