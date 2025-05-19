@@ -13,6 +13,10 @@ const SignUpForm = () => {
     confirmPassword: "",
   });
 
+  useEffect(() => {
+    sessionStorage.clear();
+  }, []);
+
   const navigate = useNavigate();
   const [toastErrors, setToastErrors] = useState([]);
 
@@ -55,17 +59,20 @@ const SignUpForm = () => {
     } else {
       setToastErrors([]);
       try {
-        const res = await fetch("https://xuoapi.vercel.app/api/v1/signup", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username: formData.username,
-            email: formData.email,
-            password: formData.password,
-          }),
-        });
+        const res = await fetch(
+          "https://xuoapi.azurewebsites.net/api/v1/signup",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: formData.username,
+              email: formData.email,
+              password: formData.password,
+            }),
+          }
+        );
 
         const jsonData = await res.json();
 
@@ -86,7 +93,11 @@ const SignUpForm = () => {
       <ErrorToast messages={toastErrors} onClose={() => setToastErrors([])} />
 
       <form className="cmp-register_container_form" onSubmit={handleSubmit}>
-        <img src={XuoPng} alt="logo" className="cmp-register_container_form_logo" />
+        <img
+          src={XuoPng}
+          alt="logo"
+          className="cmp-register_container_form_logo"
+        />
 
         <input
           type="text"
@@ -128,8 +139,7 @@ const SignUpForm = () => {
 
         <div className="cmp-register_container_form_footer">
           <p>
-            Already have an account?{" "}
-            <Link to="/login">Login</Link>
+            Already have an account? <Link to="/login">Login</Link>
           </p>
         </div>
       </form>

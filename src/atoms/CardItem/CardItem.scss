@@ -4,6 +4,7 @@
     background-color: #ffffff;
     overflow: hidden;
     color: black;
+    
   
     &__image {
       width: 235px;
@@ -13,7 +14,6 @@
     }
   
     &__info {
-      padding: 12px;
       flex-direction: column;
     }
   
@@ -32,12 +32,14 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      margin: 5px 0;
     }
   
     &__price {
       font-size: 18px;
       color: black;
       white-space: nowrap;
+      margin: 5px 0;
     }
   }
   

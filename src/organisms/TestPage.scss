@@ -1,0 +1,30 @@
+.conjunto-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .card-item{
+    margin-bottom: 15px;
+  }
+
+}
+.recomendados{
+     padding: 0 1rem;
+}
+
+
+
+@media (max-width: 930px) {
+  .conjunto-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+@media (max-width: 480px) {
+  .conjunto-cards {
+    grid-template-columns: 1fr;
+  }
+}

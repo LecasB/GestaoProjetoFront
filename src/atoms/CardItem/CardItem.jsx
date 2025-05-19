@@ -1,19 +1,21 @@
 import React from "react";
 import "./CardItem.scss";
+import { useNavigate } from "react-router-dom";
 
-const mockProduct = {
-  name: "Camisola cinzenta",
-  price: "29.99€",
-  image: "../../../public/imgs/ronaldo.jpg"
-};
+const CardItem = ({ id, image, name, price }) => {
+  const navigate = useNavigate();
 
-const CardItem = () => {
   return (
     <div className="card-item">
-      <img src={mockProduct.image} alt={mockProduct.name} className="card-item__image" />
+      <img
+        src={image}
+        alt={name}
+        className="card-item__image"
+        onClick={() => navigate(`/item?id=${id}`)}
+      />
       <div className="card-item__info">
-        <h2 className="card-item__name">{mockProduct.name}</h2>
-        <p className="card-item__price">{mockProduct.price}</p>
+        <p className="card-item__name">{name}</p>
+        <p className="card-item__price">{price}</p>
       </div>
     </div>
   );
