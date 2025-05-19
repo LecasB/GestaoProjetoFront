@@ -9,6 +9,7 @@ import TestPage from "./organisms/TestPage";
 import UpdateProfileForm from "./molecules/UpdateProfileForm/UpdateProfileForm";
 import ItemDetailPage from "./organisms/ItemDetailPage";
 import UploadItemPage from "./organisms/UploadItemPage";
+import ProfilePage from "./organisms/ProfilePage/ProfilePage";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/index" element={<TestPage />} />
           <Route path="/item" element={<ItemDetailPage />} />
           <Route path="/newItem" element={<UploadItemPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Route>
       </Routes>
     </BrowserRouter>
