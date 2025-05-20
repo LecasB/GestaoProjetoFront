@@ -3,13 +3,14 @@ import LoginForm from "./molecules/LoginForm/LoginForm";
 import MessagePage from "./molecules/Messages/MessagePage";
 import "./App.scss";
 import SignUpForm from "./molecules/SingUpForm/SignUpForm";
-import FileUpload from "./atoms/FileUpload/FileUpload";
 import Layout from "./molecules/Layout/Layout";
 import TestPage from "./organisms/TestPage";
 import UpdateProfileForm from "./molecules/UpdateProfileForm/UpdateProfileForm";
 import ItemDetailPage from "./organisms/ItemDetailPage";
 import UploadItemPage from "./organisms/UploadItemPage";
 import ProfilePage from "./organisms/ProfilePage/ProfilePage";
+import BackendLayout from "./organisms/BackOffice/BackendLayout/BackendLayout";
+import IndexAdmin from "./organisms/BackOffice/IndexAdmin";
 
 function App() {
   return (
@@ -27,6 +28,12 @@ function App() {
           <Route path="/newItem" element={<UploadItemPage />} />
           <Route path="/profile" element={<ProfilePage />} />
         </Route>
+
+        <Route path="/" element={<BackendLayout/>}>
+        <Route path="/backoffice" element={<IndexAdmin />}/>
+
+        </Route>
+
       </Routes>
     </BrowserRouter>
   );
