@@ -15,7 +15,7 @@ const MessagePage = () => {
   const getUsersList = async () => {
     try {
       const res = await fetch(
-        "https://xuoapi.vercel.app/api/v1/getUserConversations",
+        "https://xuoapi.azurewebsites.net/api/v1/getUserConversations",
         {
           method: "POST",
           headers: {

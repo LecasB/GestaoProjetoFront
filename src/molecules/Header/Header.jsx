@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import "./Header.scss";
 import {
   FaSearch,
@@ -11,19 +11,22 @@ import { RxCrossCircled } from "react-icons/rx";
 import { HiMenuAlt1 } from "react-icons/hi";
 import logo from "../../../public/imgs/xuo.png";
 import profilePic from "../../../public/imgs/ronaldo.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [isLogin, setIsLogin] = useState(() => {
     return sessionStorage.getItem("id") !== null;
   });
+  const [userDetails, setUserDetails] = useState([]);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 430);
   const [showSearch, setShowSearch] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [closingDrawer, setClosingDrawer] = useState(false);
   const [closingSearch, setClosingSearch] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    handleUserInfo();
     const handleResize = () => setIsMobile(window.innerWidth <= 430);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -35,6 +38,24 @@ const Header = () => {
       setDrawerOpen(false);
       setClosingDrawer(false);
     }, 300);
+  };
+
+  const handleUserInfo = async () => {
+    isLogin
+      ? await fetch(
+          `https://xuoapi.azurewebsites.net/api/v1/user/${sessionStorage.getItem(
+            "id"
+          )}`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            setUserDetails(data);
+          })
+          .catch((error) => {
+            console.error("Error fetching item details:", error);
+          })
+      : "";
   };
 
   const handleSearchClose = () => {
@@ -73,7 +94,12 @@ const Header = () => {
                   <HiMenuAlt1 />
                 </div>
               ) : (
-                <img src={logo} alt="XUO Logo" className="logo" />
+                <img
+                  src={logo}
+                  alt="XUO Logo"
+                  className="logo"
+                  onClick={() => navigate("/index")}
+                />
               )}
             </div>
 
@@ -93,7 +119,9 @@ const Header = () => {
                 />
               ) : (
                 <div className="actionIcons">
-                  <FaPlus className="icon" />
+                  <Link to="/newItem" className="messagesIcon">
+                    <FaPlus className="icon" />
+                  </Link>
                   <div className="notificationIcon">
                     <FaBell className="icon" />
                   </div>
@@ -107,7 +135,7 @@ const Header = () => {
                     <img
                       src={
                         isLogin
-                          ? profilePic
+                          ? userDetails.image
                           : "https://i.ibb.co/chLJhfGz/default-icon.jpg"
                       }
                       alt="User avatar"

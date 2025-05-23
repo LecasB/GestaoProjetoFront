@@ -48,16 +48,19 @@ const FullChat = ({ user, otherUser }) => {
   const getMessages = async () => {
     setLoading(true);
     try {
-      const res = await fetch("https://xuoapi.vercel.app/api/v1/getMessages", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          idsender: otherUser,
-          idreceiver: user,
-        }),
-      });
+      const res = await fetch(
+        "https://xuoapi.azurewebsites.net/api/v1/getMessages",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            idsender: otherUser,
+            idreceiver: user,
+          }),
+        }
+      );
 
       const data = await res.json();
       setMessages(Array.isArray(data) ? data : []);
@@ -80,7 +83,7 @@ const FullChat = ({ user, otherUser }) => {
     };
 
     try {
-      await fetch("https://xuoapi.vercel.app/api/v1/newMessage", {
+      await fetch("https://xuoapi.azurewebsites.net/api/v1/newMessage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

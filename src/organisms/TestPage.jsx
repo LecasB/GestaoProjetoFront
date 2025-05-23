@@ -1,7 +1,8 @@
-import Layout from "../molecules/Layout/Layout";
-
+import "./TestPage.scss";
+import FilterButton from "../atoms/FilterButton/FilterButton";
 const TestPage = () => {
   const user = JSON.parse(localStorage.getItem(""));
+
   return (
     <>
       <h1>
@@ -10,7 +11,7 @@ const TestPage = () => {
           ? sessionStorage.getItem("name")
           : "Guest"}
       </h1>
-           
+           <FilterButton></FilterButton>
     </>
   );
 };

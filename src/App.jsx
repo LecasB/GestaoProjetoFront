@@ -3,8 +3,13 @@ import LoginForm from "./molecules/LoginForm/LoginForm";
 import MessagePage from "./molecules/Messages/MessagePage";
 import "./App.scss";
 import SignUpForm from "./molecules/SingUpForm/SignUpForm";
+import FileUpload from "./atoms/FileUpload/FileUpload";
 import Layout from "./molecules/Layout/Layout";
 import TestPage from "./organisms/TestPage";
+import UpdateProfileForm from "./molecules/UpdateProfileForm/UpdateProfileForm";
+import ItemDetailPage from "./organisms/ItemDetailPage";
+import UploadItemPage from "./organisms/UploadItemPage";
+import ProfilePage from "./organisms/ProfilePage/ProfilePage";
 
 function App() {
   return (
@@ -14,9 +19,13 @@ function App() {
         <Route index path="/login" element={<LoginForm />} />
         <Route path="/signup" element={<SignUpForm />} />
         <Route path="/mensagens" element={<MessagePage />} />
+        <Route path="/test" element={<UpdateProfileForm />} />
 
         <Route path="/" element={<Layout />}>
           <Route path="/index" element={<TestPage />} />
+          <Route path="/item" element={<ItemDetailPage />} />
+          <Route path="/newItem" element={<UploadItemPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Route>
       </Routes>
     </BrowserRouter>
