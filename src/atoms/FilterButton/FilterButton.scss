@@ -18,15 +18,14 @@
   border-radius: 0.5rem 0.5rem 0 0;
   cursor: pointer;
   position: relative;
+  gap: 5px;
 
   .arrow-icon {
     transition: transform 0.3s ease;
-     position: absolute;
-  right: 0.4rem; 
   }
 
   &.open::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: 0;
     left: 0;
