@@ -1,5 +1,5 @@
 import "./TestPage.scss";
-import CardsList from "../molecules/CardsList/CardsList"
+import FilterButton from "../atoms/FilterButton/FilterButton";
 const TestPage = () => {
   const user = JSON.parse(localStorage.getItem(""));
 
@@ -11,8 +11,7 @@ const TestPage = () => {
           ? sessionStorage.getItem("name")
           : "Guest"}
       </h1>
-      
-     <CardsList/>
+           <FilterButton></FilterButton>
     </>
   );
 };
