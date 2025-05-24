@@ -16,6 +16,27 @@
         justify-content: space-between;
         align-items: center;
       }
+
+      &--buttons {
+        display: flex;
+        width: 100%;
+        gap: 20px;
+
+        &--btn_primary {
+          width: fit-content;
+          background-color: #012030;
+          padding: 15px 85px;
+          color: #fff;
+          font-size: 14px;
+        }
+        &--btn_secondary {
+          width: fit-content;
+          background-color: #b4bcb4;
+          padding: 15px 55px;
+          color: #fff;
+          font-size: 14px;
+        }
+      }
     }
   }
 }
