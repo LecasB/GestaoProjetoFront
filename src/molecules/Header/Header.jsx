@@ -10,10 +10,13 @@ import {
 import { RxCrossCircled } from "react-icons/rx";
 import { HiMenuAlt1 } from "react-icons/hi";
 import logo from "../../../public/imgs/xuo.png";
-import profilePic from "../../../public/imgs/ronaldo.jpg";
+import FilterPopup from "../../atoms/FilterPopup/FilterPopup";
+
 import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const [filters, setFilters] = useState([]);
+
   const [isLogin, setIsLogin] = useState(() => {
     return sessionStorage.getItem("id") !== null;
   });
@@ -23,6 +26,8 @@ const Header = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [closingDrawer, setClosingDrawer] = useState(false);
   const [closingSearch, setClosingSearch] = useState(false);
+  const [showFilter, setShowFilter] = useState(false);
+  const [value, setValue] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -105,9 +110,30 @@ const Header = () => {
 
             {!isMobile && (
               <div className="searchBar">
-                <input type="text" placeholder="Pesquisar..." />
-                <FaSearch className="searchIcon" />
-                <FaFilter className="filterIcon" />
+                <input
+                  type="text"
+                  placeholder="Pesquisar..."
+                  onChange={(e) => setValue(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      navigate(
+                        `/search?keyword=${value}${
+                          filters.length > 0
+                            ? `&filters=${JSON.stringify(filters)}`
+                            : ""
+                        }`
+                      );
+                    }
+                  }}
+                />
+                <FaSearch
+                  className="searchIcon"
+                  onClick={() => navigate(`/search?keyword=${value}`)}
+                />
+                <FaFilter
+                  className="filterIcon"
+                  onClick={() => setShowFilter(!showFilter)}
+                />
               </div>
             )}
 
@@ -149,11 +175,10 @@ const Header = () => {
           </header>
         )}
       </div>
-
       {isMobile && drawerOpen && (
         <div className="drawerOverlay" onClick={handleDrawerClose} />
       )}
-
+      <FilterPopup visible={showFilter} onFilterChange={setFilters} />
       {isMobile && (
         <div
           className={`drawer ${drawerOpen ? "open" : ""} ${

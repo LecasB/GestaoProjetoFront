@@ -7,12 +7,12 @@ const BackendLayout = () => {
   return (
     <div className="cmp-bo-layout">
       <div
-        style={{ width: "100vw", height: "80px" }}
+        style={{ width: "100vw", height: "80px", padding: "20px" }}
         className="cmp-bo-layout__topbar"
       >
         <img
           style={{ height: "70px", width: "150px" }}
-          src="https://cdn.discordapp.com/attachments/1179520343724007576/1339722496206966897/2__1_-removebg.png?ex=682da88d&is=682c570d&hm=a7d0bfa6049ebc21ffeaefd472779a9599ad5c5f8cb7e983d3efd109100f56ad&"
+          src="https://i.ibb.co/V0gYSfsk/2-1-removebg.png"
           alt=""
         />
         <div
@@ -42,7 +42,6 @@ const BackendLayout = () => {
           className="cmp-bo-layout__sidebar"
         >
           <p
-            to="gerirItems"
             className="cmp-bo-layout__sidebar__item"
             onClick={() => {
               navigate("gerirItems");
@@ -50,8 +49,12 @@ const BackendLayout = () => {
           >
             Gerir Items
           </p>
-          <p className="cmp-bo-layout__sidebar__item">Gerir Categorias</p>
-          <p className="cmp-bo-layout__sidebar__item">Gerir Users</p>
+          <p
+            className="cmp-bo-layout__sidebar__item"
+            onClick={() => navigate("gerirUsers")}
+          >
+            Gerir Users
+          </p>
         </div>
         <div className="Content">
           <Outlet />

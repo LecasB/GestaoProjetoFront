@@ -11,6 +11,8 @@
   color: white;
   width: 100%;
   box-sizing: border-box;
+  z-index: 999;
+  position: relative;
 
   .headerLeft,
   .headerRight {

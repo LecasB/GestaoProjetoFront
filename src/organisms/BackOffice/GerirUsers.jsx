@@ -12,7 +12,7 @@ const GerirUsers = () => {
     const fetchProducts = async () => {
       try {
         const response = await fetch(
-          "https://xuoapi.azurewebsites.net/api/v1/items"
+          "https://xuoapi.azurewebsites.net/api/v1/users"
         );
         const data = await response.json();
         setProducts(data);
@@ -28,9 +28,14 @@ const GerirUsers = () => {
   const imageBodyTemplate = (rowData) => {
     return (
       <img
-        src={rowData?.images?.[0]}
+        src={rowData?.image}
         alt="Item"
-        style={{ width: "100px", height: "100px", objectFit: "cover" }}
+        style={{
+          width: "80px",
+          height: "80px",
+          objectFit: "cover",
+          borderRadius: "50%",
+        }}
       />
     );
   };
@@ -50,15 +55,16 @@ const GerirUsers = () => {
           rowsPerPageOptions={[5, 10, 25, 50]}
           tableStyle={{ width: "89vw" }}
         >
-          <Column field="title" header="Title" style={{ width: "30%" }} />
-          <Column field="price" header="Price" style={{ width: "10%" }} />
+          <Column field="_id" header="ID" style={{ width: "20%" }} />
+          <Column field="username" header="Username" style={{ width: "30%" }} />
           <Column
             header="Image"
             body={imageBodyTemplate}
             style={{ width: "15%" }}
           />
+          <Column field="email" header="Email" style={{ width: "10%" }} />
           <Column
-            field="description"
+            field="descricao"
             header="Description"
             style={{
               width: "20%",
@@ -67,7 +73,7 @@ const GerirUsers = () => {
               textOverflow: "ellipsis",
             }}
           />
-          <Column field="idseller" header="User" style={{ width: "20%" }} />
+
           <Column header="Delete" body={<FaTrash />} style={{ width: "20%" }} />
         </DataTable>
       </div>
