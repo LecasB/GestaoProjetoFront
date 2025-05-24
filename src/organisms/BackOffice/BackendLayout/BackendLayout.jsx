@@ -1,8 +1,9 @@
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import "./BackendLayout.scss";
 import { FaBell } from "react-icons/fa";
 
 const BackendLayout = () => {
+  const navigate = useNavigate();
   return (
     <div className="cmp-bo-layout">
       <div
@@ -13,7 +14,6 @@ const BackendLayout = () => {
           style={{ height: "70px", width: "150px" }}
           src="https://cdn.discordapp.com/attachments/1179520343724007576/1339722496206966897/2__1_-removebg.png?ex=682da88d&is=682c570d&hm=a7d0bfa6049ebc21ffeaefd472779a9599ad5c5f8cb7e983d3efd109100f56ad&"
           alt=""
-          srcset=""
         />
         <div
           style={{
@@ -21,7 +21,7 @@ const BackendLayout = () => {
             alignItems: "center",
             gap: "10px",
             padding: "10px",
-            boxSizing: "border-box"
+            boxSizing: "border-box",
           }}
         >
           <FaBell style={{ color: "white", fontSize: "25px" }} />
@@ -41,7 +41,15 @@ const BackendLayout = () => {
           }}
           className="cmp-bo-layout__sidebar"
         >
-          <p className="cmp-bo-layout__sidebar__item">Gerir Items</p>
+          <p
+            to="gerirItems"
+            className="cmp-bo-layout__sidebar__item"
+            onClick={() => {
+              navigate("gerirItems");
+            }}
+          >
+            Gerir Items
+          </p>
           <p className="cmp-bo-layout__sidebar__item">Gerir Categorias</p>
           <p className="cmp-bo-layout__sidebar__item">Gerir Users</p>
         </div>

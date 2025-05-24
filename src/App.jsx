@@ -11,6 +11,9 @@ import UploadItemPage from "./organisms/UploadItemPage";
 import ProfilePage from "./organisms/ProfilePage/ProfilePage";
 import BackendLayout from "./organisms/BackOffice/BackendLayout/BackendLayout";
 import IndexAdmin from "./organisms/BackOffice/IndexAdmin";
+import GerirItem from "./organisms/BackOffice/GerirItems";
+import GerirCategorias from "./organisms/BackOffice/GerirCategorias";
+import GerirUsers from "./organisms/BackOffice/GerirUsers";
 
 function App() {
   return (
@@ -29,11 +32,12 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
         </Route>
 
-        <Route path="/" element={<BackendLayout/>}>
-        <Route path="/backoffice" element={<IndexAdmin />}/>
-
+        <Route path="/backoffice" element={<BackendLayout />}>
+          <Route index element={<IndexAdmin />} />
+          <Route path="gerirItems" element={<GerirItem />} />
+          <Route path="gerirCategorias" element={<GerirCategorias />} />
+          <Route path="gerirUsers" element={<GerirUsers />} />
         </Route>
-
       </Routes>
     </BrowserRouter>
   );
