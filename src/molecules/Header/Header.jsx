@@ -15,7 +15,9 @@ import FilterPopup from "../../atoms/FilterPopup/FilterPopup";
 import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
-  const [filters, setFilters] = useState([]);
+  const [condition, setCondition] = useState([]);
+  const [minValue, setMinValue] = useState(null);
+  const [maxValue, setMaxValue] = useState(null);
 
   const [isLogin, setIsLogin] = useState(() => {
     return sessionStorage.getItem("id") !== null;
@@ -117,18 +119,19 @@ const Header = () => {
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       navigate(
-                        `/search?keyword=${value}${
-                          filters.length > 0
-                            ? `&filters=${JSON.stringify(filters)}`
-                            : ""
-                        }`
+                        `/search?title=${value}` +
+                          (condition.length > 0
+                            ? `&condition=${condition.join(",")}`
+                            : "") +
+                          (minValue ? `&minPrice=${minValue}` : "") +
+                          (maxValue ? `&maxPrice=${maxValue}` : "")
                       );
                     }
                   }}
                 />
                 <FaSearch
                   className="searchIcon"
-                  onClick={() => navigate(`/search?keyword=${value}`)}
+                  onClick={() => navigate(`/search?title=${value}`)}
                 />
                 <FaFilter
                   className="filterIcon"
@@ -178,7 +181,12 @@ const Header = () => {
       {isMobile && drawerOpen && (
         <div className="drawerOverlay" onClick={handleDrawerClose} />
       )}
-      <FilterPopup visible={showFilter} onFilterChange={setFilters} />
+      <FilterPopup
+        visible={showFilter}
+        onConditionChange={setCondition}
+        onMinValueChange={setMinValue}
+        onMaxValueChange={setMaxValue}
+      />
       {isMobile && (
         <div
           className={`drawer ${drawerOpen ? "open" : ""} ${

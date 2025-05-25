@@ -1,8 +1,16 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
+import { InputNumber } from "primereact/inputnumber";
 
-const FilterPopup = ({ visible, onFilterChange }) => {
+const FilterPopup = ({
+  visible,
+  onConditionChange,
+  onMinValueChange,
+  onMaxValueChange,
+}) => {
   const [filtros, setFiltros] = useState([]);
+  const [minValue, setMinValue] = useState(null);
+  const [maxValue, setMaxValue] = useState(null);
 
   const handleFilterChange = (e) => {
     const checked = e.target.checked;
@@ -12,8 +20,18 @@ const FilterPopup = ({ visible, onFilterChange }) => {
       : filtros.filter((f) => f !== value);
 
     setFiltros(updated);
-    onFilterChange(updated);
+    onConditionChange(updated);
     console.log(updated);
+  };
+
+  const handleMinValueChange = (e) => {
+    setMinValue(e.value);
+    onMinValueChange(e.value);
+  };
+
+  const handleMaxValueChange = (e) => {
+    setMaxValue(e.value);
+    onMaxValueChange(e.value);
   };
 
   useEffect(() => {
@@ -46,7 +64,7 @@ const FilterPopup = ({ visible, onFilterChange }) => {
         style={{
           display: visible ? "block" : "none",
           position: "fixed",
-          top: "15%",
+          top: "18%",
           left: "50%",
           width: "100%",
           transform: "translate(-50%, -50%)",
@@ -74,6 +92,25 @@ const FilterPopup = ({ visible, onFilterChange }) => {
               {" " + option.charAt(0).toUpperCase() + option.slice(1)}
             </label>
           ))}
+          <label for="currency">Valor Minimo:</label>
+          <InputNumber
+            inputId="currency-germany"
+            input="minvalue"
+            mode="currency"
+            onChange={(e) => handleMinValueChange(e)}
+            currency="EUR"
+            locale="de-DE"
+          />
+          <br />
+          <label for="currency">Valor Maximo:</label>
+          <InputNumber
+            inputId="currency-germany"
+            input="maxvalue"
+            onChange={(e) => handleMaxValueChange(e)}
+            mode="currency"
+            currency="EUR"
+            locale="de-DE"
+          />
         </div>
       </div>
     </>

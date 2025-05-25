@@ -8,6 +8,29 @@ import "primereact/resources/primereact.min.css";
 const GerirItems = () => {
   const [products, setProducts] = useState([]);
 
+  const handleDelete = (id) => {
+    fetch(`https://xuoapi.azurewebsites.net/api/v1/items/${id}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (response.ok) {
+          setProducts(products.filter((product) => product._id !== id));
+        } else {
+          console.error("Failed to delete the item");
+        }
+      })
+      .catch((error) => console.error("Error deleting item:", error));
+  };
+
+  const handleBodyTemplate = (rowData) => {
+    return (
+      <FaTrash
+        style={{ cursor: "pointer" }}
+        onClick={() => handleDelete(rowData._id)}
+      />
+    );
+  };
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -68,7 +91,11 @@ const GerirItems = () => {
             }}
           />
           <Column field="idseller" header="User" style={{ width: "20%" }} />
-          <Column header="Delete" body={<FaTrash />} style={{ width: "20%" }} />
+          <Column
+            header="Delete"
+            body={handleBodyTemplate}
+            style={{ width: "20%" }}
+          />
         </DataTable>
       </div>
     </>
