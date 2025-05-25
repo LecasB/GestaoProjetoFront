@@ -8,6 +8,20 @@ import "primereact/resources/primereact.min.css";
 const GerirUsers = () => {
   const [products, setProducts] = useState([]);
 
+  const handleDelete = (id) => {
+    fetch(`https://xuoapi.azurewebsites.net/api/v1/user/deleteById/${id}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (response.ok) {
+          setProducts(products.filter((product) => product._id !== id));
+        } else {
+          console.error("Failed to delete the user");
+        }
+      })
+      .catch((error) => console.error("Error deleting user:", error));
+  };
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -36,6 +50,15 @@ const GerirUsers = () => {
           objectFit: "cover",
           borderRadius: "50%",
         }}
+      />
+    );
+  };
+
+  const deleteButtonTemplate = (rowData) => {
+    return (
+      <FaTrash
+        style={{ cursor: "pointer" }}
+        onClick={() => handleDelete(rowData._id)}
       />
     );
   };
@@ -74,7 +97,11 @@ const GerirUsers = () => {
             }}
           />
 
-          <Column header="Delete" body={<FaTrash />} style={{ width: "20%" }} />
+          <Column
+            header="Delete"
+            body={deleteButtonTemplate}
+            style={{ width: "20%" }}
+          />
         </DataTable>
       </div>
     </>
