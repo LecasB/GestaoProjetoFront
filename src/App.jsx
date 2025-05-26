@@ -3,12 +3,17 @@ import LoginForm from "./molecules/LoginForm/LoginForm";
 import MessagePage from "./molecules/Messages/MessagePage";
 import "./App.scss";
 import SignUpForm from "./molecules/SingUpForm/SignUpForm";
-import FileUpload from "./atoms/FileUpload/FileUpload";
 import Layout from "./molecules/Layout/Layout";
 import TestPage from "./organisms/TestPage";
 import UpdateProfileForm from "./molecules/UpdateProfileForm/UpdateProfileForm";
 import ItemDetailPage from "./organisms/ItemDetailPage";
 import UploadItemPage from "./organisms/UploadItemPage";
+import ProfilePage from "./organisms/ProfilePage/ProfilePage";
+import BackendLayout from "./organisms/BackOffice/BackendLayout/BackendLayout";
+import IndexAdmin from "./organisms/BackOffice/IndexAdmin";
+import GerirItem from "./organisms/BackOffice/GerirItems";
+import GerirUsers from "./organisms/BackOffice/GerirUsers";
+import SeachPage from "./organisms/SearchPage/SearchPage";
 
 function App() {
   return (
@@ -24,6 +29,14 @@ function App() {
           <Route path="/index" element={<TestPage />} />
           <Route path="/item" element={<ItemDetailPage />} />
           <Route path="/newItem" element={<UploadItemPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/search" element={<SeachPage />} />
+        </Route>
+
+        <Route path="/backoffice" element={<BackendLayout />}>
+          <Route index element={<IndexAdmin />} />
+          <Route path="gerirItems" element={<GerirItem />} />
+          <Route path="gerirUsers" element={<GerirUsers />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -1,0 +1,30 @@
+.cmp-bo-layout {
+  display: "flex";
+  flex-direction: "column";
+
+  &__topbar {
+    background-color: rgb(0, 35, 51);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__sidebar {
+    background-color: rgb(0, 35, 51);
+
+    &__item {
+        margin: 20px auto;
+        width: 80%;
+      color: #fff;
+      background-color: black;
+      border-radius: 10px;
+      padding: 10px;
+      transition: background-color 0.2s linear;
+
+      &:hover {
+        background-color: rgb(13, 82, 82);
+        cursor: pointer;
+      }
+    }
+  }
+}

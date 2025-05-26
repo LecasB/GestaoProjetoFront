@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { FaStar, FaStarHalfAlt, FaRegStar, FaUserCircle } from "react-icons/fa";
 import "./UserMiniProfileItem.scss";
+import { useNavigate } from "react-router-dom";
 
 const UserMiniProfileItem = ({ id }) => {
   const [userDetails, setUserDetails] = useState("");
+  const navigate = useNavigate();
 
   const getUserInfo = async () => {
     fetch(`https://xuoapi.azurewebsites.net/api/v1/user/${id}`)
@@ -43,6 +45,9 @@ const UserMiniProfileItem = ({ id }) => {
           src={userDetails.image}
           style={{ height: "50px", width: "50px", borderRadius: "50%" }}
           className="avatar"
+          onClick={() => {
+            navigate(`/profile?id=${userDetails._id}`);
+          }}
         />
         <span className="name">{userDetails.username}</span>
       </div>

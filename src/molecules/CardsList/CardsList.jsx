@@ -1,42 +1,48 @@
 import { useEffect, useState } from "react";
 import CardItem from "../../atoms/CardItem/CardItem";
 import "./CardsList.scss";
-const CardsList = () => {
-  const user = JSON.parse(localStorage.getItem(""));
 
+const CardsList = ({ id, filters }) => {
   const [items, setItems] = useState([]);
-
-  useEffect(() => {
-    getItems();
-  }, []);
 
   const getItems = async () => {
     try {
-      const resposta = await fetch(
-        "https://xuoapi.azurewebsites.net/api/v1/items"
-      );
-      setItems(await resposta.json());
+      let baseUrl = "https://xuoapi.azurewebsites.net/api/v1/items?";
+      let url = "";
+
+      if (id) {
+        url = `${baseUrl}/user/${id}`;
+        if (filters) url += filters;
+      } else {
+        url = `${baseUrl}${filters || ""}`;
+      }
+
+      console.log("Fetching URL:", url);
+
+      const resposta = await fetch(url);
+      const data = await resposta.json();
+      setItems(data);
     } catch (error) {
-      console.error(error);
+      console.error("Erro ao buscar os items:", error);
     }
   };
 
-  return (
-    <>
-      <h2 className="recomendados">Recomendados</h2>
+  useEffect(() => {
+    getItems();
+  }, [id, filters]);
 
-      <div className="conjunto-cards">
-        {items.map((item, key) => (
-          <CardItem
-            key={key}
-            id={item._id}
-            image={item.images[0]}
-            price={item.price}
-            name={item.title}
-          />
-        ))}
-      </div>
-    </>
+  return (
+    <div className="conjunto-cards">
+      {items.map((item) => (
+        <CardItem
+          key={item._id}
+          id={item._id}
+          image={item.images[0]}
+          price={item.price}
+          name={item.title}
+        />
+      ))}
+    </div>
   );
 };
 
