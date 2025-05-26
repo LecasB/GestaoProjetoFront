@@ -1,6 +1,7 @@
 import "./TestPage.scss";
 import FilterButton from "../atoms/FilterButton/FilterButton";
 import HeroBanner from "../atoms/HeroBanner/HeroBanner";
+import CardsList from "../molecules/CardsList/CardsList";
 const TestPage = () => {
   const user = JSON.parse(localStorage.getItem(""));
 
@@ -13,7 +14,8 @@ const TestPage = () => {
           : "Guest"}
       </h1>
       <HeroBanner />
-      <h2>Recomendados:</h2> <FilterButton></FilterButton>
+      <h2>Recomendados:</h2>
+      <CardsList />
     </>
   );
 };

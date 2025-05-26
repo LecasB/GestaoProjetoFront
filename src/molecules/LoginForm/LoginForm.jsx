@@ -21,6 +21,7 @@ const LoginForm = () => {
   }, []);
 
   const handleSubmit = async (event) => {
+    setToastErrors([]);
     event.preventDefault();
     try {
       setLoading(true);
@@ -36,6 +37,13 @@ const LoginForm = () => {
       });
 
       const jsonData = await res.json();
+
+      if (!res.ok) {
+        const errorMsg = jsonData?.message || "Email ou password incorretos.";
+        setToastErrors([errorMsg]);
+        setLoading(false);
+        return;
+      }
 
       setData(jsonData);
 
