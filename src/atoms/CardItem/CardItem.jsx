@@ -9,19 +9,20 @@ const CardItem = ({ id, image, name, price }) => {
   useEffect(() => {
     const userId = sessionStorage.getItem("id");
     if (!userId) return;
-  
-    fetch(`https://xuoapi.azurewebsites.net/api/v1/favorite/getAllByUserId/${userId}`)
-      .then(response => response.json())
-      .then(data => {
-        // Use data.items array here
+
+    fetch(
+      `https://xuoapi.azurewebsites.net/api/v1/favorite/getAllByUserId/${userId}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
         if (Array.isArray(data.items)) {
-          const favFound = data.items.some(fav => fav._id === id);
+          const favFound = data.items.some((fav) => fav._id === id);
           setIsFavourite(favFound);
         } else {
           setIsFavourite(false);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error fetching favorites:", error);
         setIsFavourite(false);
       });
@@ -36,11 +37,46 @@ const CardItem = ({ id, image, name, price }) => {
         onClick={() => navigate(`/item?id=${id}`)}
       />
       <img
-        style={{ height: "50px", width: "50px", position: "absolute", top: "10px", right: "10px" }}
+        style={{
+          height: "50px",
+          width: "50px",
+          position: "absolute",
+          top: "10px",
+          right: "10px",
+        }}
+        onClick={() => {
+          if (!sessionStorage.getItem("id")) {
+            alert("Please log in to add to favourites.");
+            return;
+          }
+          setIsFavourite(!isFavourite);
+          const userId = sessionStorage.getItem("id");
+          const url = isFavourite
+            ? `https://xuoapi.azurewebsites.net/api/v1/favorite/deleteFavorite`
+            : `https://xuoapi.azurewebsites.net/api/v1/favorite/addFavorite`;
+
+          fetch(url, {
+            method: isFavourite ? "DELETE" : "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              iduser: userId,
+              iditem: id,
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data);
+            })
+            .catch((error) => {
+              console.error("Error updating favourites:", error);
+            });
+        }}
         src={
           isFavourite
-            ? "https://xuobucket.blob.core.windows.net/utils/heart_fill.svg" // filled heart
-            : "https://xuobucket.blob.core.windows.net/utils/heart_empty.svg"  // empty heart
+            ? "https://xuobucket.blob.core.windows.net/utils/heart_fill.svg"
+            : "https://xuobucket.blob.core.windows.net/utils/heart_empty.svg"
         }
         alt={isFavourite ? "Favourite" : "Not favourite"}
       />

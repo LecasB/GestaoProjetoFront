@@ -4,9 +4,11 @@ import UserMiniProfileItem from "../atoms/UserMiniProfileItem/UserMiniProfileIte
 import ReportButton from "../atoms/ReportButton/ReportButton";
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import PopupTemplate from "../atoms/PopupTemplate/PopupTemplate";
 
 const ItemDetailPage = () => {
   const [itemDetails, setItemDetails] = useState("");
+  const [buyPopup, setBuyPopup] = useState(false);
   const [searchParams] = useSearchParams();
   const itemId = searchParams.get("id")
     ? searchParams.get("id")
@@ -53,6 +55,11 @@ const ItemDetailPage = () => {
   }, []);
   return (
     <div className="cmp-item-detail-page">
+      {buyPopup && (
+        <PopupTemplate
+          title={`Deseja comprar o produto: ${itemDetails.title} ?`}
+        />
+      )}
       {itemDetails && (
         <div className="cmp-item-detail-page__item-detail">
           <div>
@@ -63,19 +70,28 @@ const ItemDetailPage = () => {
             <h1>{itemDetails.title}</h1>
             <p>{itemDetails.description}</p>
             <div className="cmp-item-detail-page__item-detail--description--price-and-report">
-              <b>{itemDetails.price}€</b>
+              <b style={{ paddingRight: "10px" }}>{itemDetails.price}€</b>
               <ReportButton />
             </div>
             <div className="cmp-item-detail-page__item-detail--description--buttons">
-              <button className="cmp-item-detail-page__item-detail--description--buttons--btn_primary">
-                Comprar
-              </button>
-              <button
-                className="cmp-item-detail-page__item-detail--description--buttons--btn_secondary"
-                onClick={handleNegociar}
-              >
-                Negociar
-              </button>
+              {itemDetails.idseller === sessionStorage.getItem("id") ? (
+                <h2 style={{ textDecoration: "underline" }}>O TEU PRODUTO</h2>
+              ) : (
+                <>
+                  <button
+                    className="cmp-item-detail-page__item-detail--description--buttons--btn_primary"
+                    onClick={() => setBuyPopup(true)}
+                  >
+                    Comprar
+                  </button>
+                  <button
+                    className="cmp-item-detail-page__item-detail--description--buttons--btn_secondary"
+                    onClick={handleNegociar}
+                  >
+                    Negociar
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
