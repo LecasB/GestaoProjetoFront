@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { InputNumber } from "primereact/inputnumber";
+import { Button } from 'primereact/button';
+
+
 
 const FilterPopup = ({
   visible,
@@ -92,7 +95,7 @@ const FilterPopup = ({
               {" " + option.charAt(0).toUpperCase() + option.slice(1)}
             </label>
           ))}
-          <label for="currency">Valor Minimo:</label>
+          <label htmlFor="currency">Valor Minimo:</label>
           <InputNumber
             inputId="currency-germany"
             input="minvalue"
@@ -111,6 +114,7 @@ const FilterPopup = ({
             currency="EUR"
             locale="de-DE"
           />
+          <Button label="Apply" />
         </div>
       </div>
     </>

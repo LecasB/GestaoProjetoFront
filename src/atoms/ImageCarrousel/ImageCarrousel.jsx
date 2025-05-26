@@ -4,9 +4,9 @@ import "./ImageCarrousel.scss";
 const ImageCarrousel = ({ images }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [imagesList, setImagesList] = useState([
-    "/imgs/ronaldo.jpg",
-    "/imgs/ronaldo2.jpg",
-    "/imgs/ronaldo3.jpg",
+    "",
+    "",
+    "",
   ]);
 
   const nextImage = () => {
@@ -24,9 +24,13 @@ const ImageCarrousel = ({ images }) => {
 
   return (
     <div className="image-carrousel">
+      {imagesList.length > 1 && (
       <button onClick={prevImage} className="image-carrousel__button">
         ‹
       </button>
+      )}
+      
+
 
       <div
         className="image-carrousel__slider"
@@ -42,6 +46,7 @@ const ImageCarrousel = ({ images }) => {
         ))}
       </div>
 
+      {imagesList.length > 1 && (
       <div className="image-carrousel__dots">
         {imagesList.map((_, index) => (
           <span
@@ -53,10 +58,12 @@ const ImageCarrousel = ({ images }) => {
           />
         ))}
       </div>
-
+      )}
+      {imagesList.length > 1 && (
       <button onClick={nextImage} className="image-carrousel__button">
         ›
       </button>
+      )}
     </div>
   );
 };
