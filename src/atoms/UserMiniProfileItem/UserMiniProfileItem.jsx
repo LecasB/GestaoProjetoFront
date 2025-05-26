@@ -28,9 +28,21 @@ const UserMiniProfileItem = ({ id }) => {
     const stars = [];
     for (let i = 0; i < 5; i++) {
       if (rating >= i + 1) {
-        stars.push(<img style={{height: "20px", width: "20px"}} src="https://xuobucket.blob.core.windows.net/utils/estrelita.png"/>);
+        stars.push(
+          <img
+            key={i}
+            style={{ height: "20px", width: "20px" }}
+            src="https://xuobucket.blob.core.windows.net/utils/estrelita.png"
+          />
+        );
       } else if (rating > i) {
-        stars.push(<img style={{height: "20px", width: "12px"}} src="https://xuobucket.blob.core.windows.net/utils/meia-estrelita.png"/>);
+        stars.push(
+          <img
+            key={i}
+            style={{ height: "20px", width: "12px" }}
+            src="https://xuobucket.blob.core.windows.net/utils/meia-estrelita.png"
+          />
+        );
       } else {
         stars.push(<FaRegStar key={i} className="star" />);
       }

@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { InputNumber } from "primereact/inputnumber";
-import { Button } from 'primereact/button';
-
-
+import { Button } from "primereact/button";
 
 const FilterPopup = ({
   visible,
@@ -105,7 +103,7 @@ const FilterPopup = ({
             locale="de-DE"
           />
           <br />
-          <label for="currency">Valor Maximo:</label>
+          <label htmlFor="currency">Valor Maximo:</label>
           <InputNumber
             inputId="currency-germany"
             input="maxvalue"

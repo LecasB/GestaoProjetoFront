@@ -3,11 +3,7 @@ import "./ImageCarrousel.scss";
 
 const ImageCarrousel = ({ images }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [imagesList, setImagesList] = useState([
-    "",
-    "",
-    "",
-  ]);
+  const [imagesList, setImagesList] = useState([]);
 
   const nextImage = () => {
     setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -25,12 +21,10 @@ const ImageCarrousel = ({ images }) => {
   return (
     <div className="image-carrousel">
       {imagesList.length > 1 && (
-      <button onClick={prevImage} className="image-carrousel__button">
-        ‹
-      </button>
+        <button onClick={prevImage} className="image-carrousel__button">
+          ‹
+        </button>
       )}
-      
-
 
       <div
         className="image-carrousel__slider"
@@ -47,22 +41,22 @@ const ImageCarrousel = ({ images }) => {
       </div>
 
       {imagesList.length > 1 && (
-      <div className="image-carrousel__dots">
-        {imagesList.map((_, index) => (
-          <span
-            key={index}
-            className={`image-carrousel__dot ${
-              index === currentIndex ? "active" : ""
-            }`}
-            onClick={() => setCurrentIndex(index)}
-          />
-        ))}
-      </div>
+        <div className="image-carrousel__dots">
+          {imagesList.map((_, index) => (
+            <span
+              key={index}
+              className={`image-carrousel__dot ${
+                index === currentIndex ? "active" : ""
+              }`}
+              onClick={() => setCurrentIndex(index)}
+            />
+          ))}
+        </div>
       )}
       {imagesList.length > 1 && (
-      <button onClick={nextImage} className="image-carrousel__button">
-        ›
-      </button>
+        <button onClick={nextImage} className="image-carrousel__button">
+          ›
+        </button>
       )}
     </div>
   );
