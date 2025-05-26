@@ -68,6 +68,24 @@ const ItemDetailPage = () => {
           </div>
           <div className="cmp-item-detail-page__item-detail--description">
             <h1>{itemDetails.title}</h1>
+            <p
+              style={{
+                fontSize: "16px",
+                color: `${
+                  itemDetails.condition == "used"
+                    ? "orange"
+                    : itemDetails.condition == "new"
+                    ? "green"
+                    : itemDetails.condition == "refurbished"
+                    ? "lightgreen"
+                    : itemDetails.condition == "broken"
+                    ? "red"
+                    : "black"
+                }`,
+              }}
+            >
+              {itemDetails.condition}
+            </p>
             <p>{itemDetails.description}</p>
             <div className="cmp-item-detail-page__item-detail--description--price-and-report">
               <b style={{ paddingRight: "10px" }}>{itemDetails.price}€</b>
