@@ -76,7 +76,20 @@ const ProfilePage = () => {
       </div>
       <hr />
       <div className="cmp-profile-page__items">
-        <h1 style={{ padding: "0px 0px 0px 20px" }}>Items</h1>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            width: "100%",
+            justifyContent: "space-between",
+            padding: "0px 20px",
+            maxWidth: "1278px",
+            margin: "0 auto",
+          }}
+        >
+          <h1 style={{ padding: "0px 0px 0px 20px" }}>Items</h1>
+          <p>Heres button Filter</p>
+        </div>
         <CardsList id={userDetails._id} />
       </div>
     </div>

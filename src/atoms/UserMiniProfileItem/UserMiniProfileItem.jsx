@@ -23,14 +23,14 @@ const UserMiniProfileItem = ({ id }) => {
     getUserInfo();
   }, []);
 
-  const rating = 5;
+  const rating = 4.5;
   const renderStars = () => {
     const stars = [];
     for (let i = 0; i < 5; i++) {
       if (rating >= i + 1) {
-        stars.push(<FaStar key={i} className="star" />);
+        stars.push(<img style={{height: "20px", width: "20px"}} src="https://xuobucket.blob.core.windows.net/utils/estrelita.png"/>);
       } else if (rating > i) {
-        stars.push(<FaStarHalfAlt key={i} className="star" />);
+        stars.push(<img style={{height: "20px", width: "12px"}} src="https://xuobucket.blob.core.windows.net/utils/meia-estrelita.png"/>);
       } else {
         stars.push(<FaRegStar key={i} className="star" />);
       }
