@@ -69,18 +69,18 @@ const LoginForm = () => {
           <input
             type="text"
             placeholder="Email"
-            className="cmp-login_container_form_textinput"
+            className="cmp-login_container_form_textinput w-100" 
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
             type="password"
             placeholder="Password"
-            className="cmp-login_container_form_textinput"
+            className="cmp-login_container_form_textinput w-100"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <div>
+          <div className="w-100">
             <input
               type="checkbox"
               id="remember"
@@ -88,8 +88,8 @@ const LoginForm = () => {
             />
             <label htmlFor="remember">Remember me</label>
           </div>
-          <button type="submit">Login</button>
-          <div>
+          <button type="submit" className="w-100">Login</button>
+          <div className="w-100">
             <Link>Forgot password</Link>
           </div>
           <p>

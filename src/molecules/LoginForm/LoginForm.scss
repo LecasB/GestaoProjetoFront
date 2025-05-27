@@ -57,6 +57,11 @@
       color: white;
       border: 1px solid #4B4B4B;
       background: rgba($color: #232323, $alpha: 0.90);
+      box-sizing: border-box;
+      padding: 20px;
+      .w-100{
+        width: 100%;
+      }
 
       &_remember {
         width: 594px;
@@ -103,6 +108,7 @@
         border: none;
         padding: 0 16px;
         font-size: 16px;
+        box-sizing: border-box;
 
         &::placeholder {
           color: #A59C9C;
@@ -152,5 +158,68 @@
       }
       
     }
+  }
+}
+
+@media (max-width: 1024px) {
+  .cmp-login_container_form {
+    width: 90%;
+    height: auto;
+    max-width: 600px;
+    
+
+/*     &_textinput,
+    &_remember,
+    &_forgot,
+    &_checkbox-group,
+    button {
+      width: 100%;
+    } */
+
+    &_logo {
+      width: 140px;
+      height: 140px;
+      padding-bottom: 30px;
+    }
+  }
+}
+
+// Mobile (até 767px)
+@media (max-width: 767px) {
+  .cmp-login_container {
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .cmp-login_container_form {
+    width: 100%;
+    height: auto;
+    
+    gap: 14px;
+
+/*     &_textinput,
+    &_remember,
+    &_forgot,
+    &_checkbox-group,
+    button {
+      width: 100%;
+    } */
+
+    &_logo {
+      width: 120px;
+      height: 120px;
+      padding-bottom: 20px;
+    }
+
+    &_footer {
+      padding-top: 16px;
+      font-size: 13px;
+    }
+  }
+
+  .bg-loading .loader {
+    width: 60px;
+    height: 60px;
+    border-width: 8px;
   }
 }
