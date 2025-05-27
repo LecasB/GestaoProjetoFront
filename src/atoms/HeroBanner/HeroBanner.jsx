@@ -1,25 +1,28 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import { Button } from 'primereact/button';
 import { Carousel } from 'primereact/carousel';
 import { Tag } from 'primereact/tag';
+import { useNavigate } from 'react-router';
+import "./HeroBanner.scss"
 
  const HeroBanner = () => {
+    const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     const responsiveOptions = [
         {
             breakpoint: '1400px',
-            numVisible: 2,
+            numVisible: 1,
             numScroll: 1
         },
         {
             breakpoint: '1199px',
-            numVisible: 3,
+            numVisible: 1,
             numScroll: 1
         },
         {
             breakpoint: '767px',
-            numVisible: 2,
+            numVisible: 1,
             numScroll: 1
         },
         {
@@ -40,15 +43,11 @@ import { Tag } from 'primereact/tag';
 
     const bannerTemplate = (product) => {
         return (
-            <div style={{height: "400px", position: "relative"}}className="border-1 surface-border border-round m-2 text-center py-5 px-3">
-                <div className="mb-3">
-                    <img  style={{width: "100%", height: "100%"}} src={`${product.image}`} alt={product.title} />
-                </div>
+            <div style={{position: "relative", background: `url('${product.image}')`}}className="hero-banner border-1 surface-border border-round m-2 text-center py-5 px-3">
                 <div style={{position: "absolute", bottom: "50px", left: "50px", color: "white"}}>
-                    <h2 style={{fontSize: "44px", marginBottom: "10px"}}>{product.title}</h2>
-                
+                    <h2 style={{marginBottom: "10px"}}>{product.title}</h2>   
                     <div className="mt-5 flex flex-wrap gap-2 justify-content-center">
-                        <Button icon="pi pi-search" className="p-button p-button-rounded" label='Ver +' />
+                        <Button onClick={() => navigate(`${product.redirection}`)} icon="pi pi-search" className="p-button p-button-rounded" label='Ver +' />
                     </div>
                 </div>
             </div>
