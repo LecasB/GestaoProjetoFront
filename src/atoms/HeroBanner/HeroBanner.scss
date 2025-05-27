@@ -1,0 +1,25 @@
+.hero-banner {
+    height: 400px;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    
+    h2{
+        font-size: 44px;
+        -webkit-text-stroke-color: black;
+        -webkit-text-stroke-width: 1px;
+    }
+    
+}
+
+@media (max-width: 767px) {
+    .hero-banner {
+        height: 200px;
+
+        h2{
+            font-size: 34px;
+        }
+    }
+
+    
+}
