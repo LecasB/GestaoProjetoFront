@@ -4,7 +4,6 @@ import UserMiniProfileItem from "../atoms/UserMiniProfileItem/UserMiniProfileIte
 import ReportButton from "../atoms/ReportButton/ReportButton";
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import PopupTemplate from "../atoms/PopupTemplate/PopupTemplate";
 
 const ItemDetailPage = () => {
   const [itemDetails, setItemDetails] = useState("");
@@ -55,11 +54,6 @@ const ItemDetailPage = () => {
   }, []);
   return (
     <div className="cmp-item-detail-page">
-      {buyPopup && (
-        <PopupTemplate
-          title={`Deseja comprar o produto: ${itemDetails.title} ?`}
-        />
-      )}
       {itemDetails && (
         <div className="cmp-item-detail-page__item-detail">
           <div>
