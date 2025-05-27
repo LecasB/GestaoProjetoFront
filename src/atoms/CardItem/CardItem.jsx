@@ -4,23 +4,76 @@ import { useNavigate } from "react-router-dom";
 
 const CardItem = ({ id, image, name, price }) => {
   const [isFavourite, setIsFavourite] = useState(false);
+  const [isOwner, setIsOwner] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
   const userId = sessionStorage.getItem("id");
-  if (!userId) return;
 
-  fetch(`https://xuoapi.azurewebsites.net/api/v1/favorite/getAllByUserId/${userId}`)
-    .then((response) => response.json())
-    .then((data) => {
-      const favFound = data.some((fav) => fav._id === id);
-      setIsFavourite(favFound);
+  useEffect(() => {
+    if (!userId || !id) return;
+  
+    
+    fetch(`https://xuoapi.azurewebsites.net/api/v1/items/${id}`)
+      .then((response) => response.json())
+      .then((itemData) => {
+        const isUserOwner = itemData.idseller === userId;
+        setIsOwner(isUserOwner);
+  
+        
+        if (!isUserOwner) {
+          fetch(`https://xuoapi.azurewebsites.net/api/v1/favorite/getAllByUserId/${userId}`)
+            .then((response) => response.json())
+            .then((favorites) => {
+              const favFound = favorites.some((fav) => fav._id === id);
+              setIsFavourite(favFound);
+            })
+            .catch((err) => {
+              console.error("Error fetching favorites:", err);
+            });
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching item data:", error);
+      });
+  }, [id, userId]);
+  
+
+  const handleFavouriteClick = () => {
+    if (!userId) {
+      alert("Please log in to add to favourites.");
+      return;
+    }
+    
+    const url = isOwner ? navigate(`/edit-item?id=${id}`)
+    : isFavourite
+      ? `https://xuoapi.azurewebsites.net/api/v1/favorite/deleteFavorite`
+      : `https://xuoapi.azurewebsites.net/api/v1/favorite/addFavorite`;
+
+    fetch(url, {
+      method: isFavourite ? "DELETE" : "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        iduser: userId,
+        iditem: id,
+      }),
     })
-    .catch((error) => {
-      console.error("Error fetching favorites:", error);
-      setIsFavourite(false);
-    });
-}, [id]);
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setIsFavourite(!isFavourite);
+      })
+      .catch((error) => {
+        console.error("Error updating favourites:", error);
+      });
+  };
+
+  const iconSrc = isOwner
+    ? "https://xuobucket.blob.core.windows.net/utils/pencil_edit.svg"
+    : isFavourite
+    ? "https://xuobucket.blob.core.windows.net/utils/heart_fill.svg"
+    : "https://xuobucket.blob.core.windows.net/utils/heart_empty.svg";
 
   return (
     <div className="card-item" style={{ position: "relative" }}>
@@ -37,42 +90,11 @@ const CardItem = ({ id, image, name, price }) => {
           position: "absolute",
           top: "10px",
           right: "10px",
+          cursor: "pointer",
         }}
-        onClick={() => {
-          if (!sessionStorage.getItem("id")) {
-            alert("Please log in to add to favourites.");
-            return;
-          }
-          setIsFavourite(!isFavourite);
-          const userId = sessionStorage.getItem("id");
-          const url = isFavourite
-            ? `https://xuoapi.azurewebsites.net/api/v1/favorite/deleteFavorite`
-            : `https://xuoapi.azurewebsites.net/api/v1/favorite/addFavorite`;
-
-          fetch(url, {
-            method: isFavourite ? "DELETE" : "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              iduser: userId,
-              iditem: id,
-            }),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              console.log(data);
-            })
-            .catch((error) => {
-              console.error("Error updating favourites:", error);
-            });
-        }}
-        src={
-          isFavourite
-            ? "https://xuobucket.blob.core.windows.net/utils/heart_fill.svg"
-            : "https://xuobucket.blob.core.windows.net/utils/heart_empty.svg"
-        }
-        alt={isFavourite ? "Favourite" : "Not favourite"}
+        onClick={handleFavouriteClick}
+        src={iconSrc}
+        alt={isOwner ? "Owner" : isFavourite ? "Favourite" : "Not favourite"}
       />
       <div className="card-item__info">
         <p className="card-item__name">{name}</p>

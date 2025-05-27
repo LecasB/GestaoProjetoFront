@@ -16,8 +16,7 @@ const SearchPage = () => {
   return (
     <div className="search-page">
       <h1>Search Results</h1>
-      <h2>Your results for: {filters}</h2>
-      <p>You found {results} results.</p>
+      <h2>You found {results} results:</h2>
       <CardsList filters={filters} numOfResults={setResults} />
     </div>
   );

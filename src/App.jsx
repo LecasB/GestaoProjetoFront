@@ -14,7 +14,7 @@ import IndexAdmin from "./organisms/BackOffice/IndexAdmin";
 import GerirItem from "./organisms/BackOffice/GerirItems";
 import GerirUsers from "./organisms/BackOffice/GerirUsers";
 import SeachPage from "./organisms/SearchPage/SearchPage";
-
+import EditItemPage from "./organisms/EditItemPage/EditItemPage";
 function App() {
   return (
     <BrowserRouter>
@@ -31,6 +31,7 @@ function App() {
           <Route path="/newItem" element={<UploadItemPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/search" element={<SeachPage />} />
+          <Route path="/edit-item" element={<EditItemPage />} />
         </Route>
 
         <Route path="/backoffice" element={<BackendLayout />}>

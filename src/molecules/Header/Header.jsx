@@ -47,6 +47,24 @@ const Header = () => {
     }, 300);
   };
 
+  const applyFilters = () => {
+    
+    let query = `/search?title=${encodeURIComponent(value)}`;
+  
+    if (condition.length > 0) {
+      query += `&condition=${condition.join(",")}`;
+    }
+    if (minValue !== null) {
+      query += `&minPrice=${minValue}`;
+    }
+    if (maxValue !== null) {
+      query += `&maxPrice=${maxValue}`;
+    }
+  
+    navigate(query);
+    setShowFilter(false); 
+  };
+
   const handleUserInfo = async () => {
     isLogin
       ? await fetch(
@@ -63,6 +81,10 @@ const Header = () => {
             console.error("Error fetching item details:", error);
           })
       : "";
+  };
+
+  const closeFilter = () => {
+    setShowFilter(false);
   };
 
   const handleSearchClose = () => {
@@ -186,6 +208,8 @@ const Header = () => {
         onConditionChange={setCondition}
         onMinValueChange={setMinValue}
         onMaxValueChange={setMaxValue}
+        onApply={applyFilters}
+        onClose={closeFilter}
       />
       {isMobile && (
         <div

@@ -1,13 +1,15 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { InputNumber } from "primereact/inputnumber";
 import { Button } from "primereact/button";
+import "./FilterPopup.scss";
 
 const FilterPopup = ({
   visible,
   onConditionChange,
   onMinValueChange,
   onMaxValueChange,
+  onApply,
+  onClose,
 }) => {
   const [filtros, setFiltros] = useState([]);
   const [minValue, setMinValue] = useState(null);
@@ -22,7 +24,6 @@ const FilterPopup = ({
 
     setFiltros(updated);
     onConditionChange(updated);
-    console.log(updated);
   };
 
   const handleMinValueChange = (e) => {
@@ -36,6 +37,20 @@ const FilterPopup = ({
   };
 
   useEffect(() => {
+    if (!visible) return;
+
+    const handleKeyDown = (e) => {
+      if (e.key === "Enter") {
+        onApply();
+        onClose();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [visible, onApply, onClose]);
+
+  useEffect(() => {
     if (visible) {
       document.body.style.overflow = "hidden";
     } else {
@@ -45,8 +60,8 @@ const FilterPopup = ({
 
   return (
     <>
-      {/* Overlay */}
       <div
+        onClick={onClose}
         style={{
           display: visible ? "block" : "none",
           position: "fixed",
@@ -59,13 +74,12 @@ const FilterPopup = ({
         }}
       />
 
-      {/* Popup */}
       <div
+        onClick={(e) => e.stopPropagation()}
         className="filter-popup"
         style={{
           display: visible ? "block" : "none",
           position: "fixed",
-          top: "18%",
           left: "50%",
           width: "100%",
           transform: "translate(-50%, -50%)",
@@ -78,17 +92,12 @@ const FilterPopup = ({
         <p>Estado do Item:</p>
         <div className="filter-options">
           {["new", "refurbished", "used", "broken"].map((option) => (
-            <label
-              key={option}
-              style={{ display: "block", margin: "0.5rem 0" }}
-            >
+            <label key={option} style={{ display: "block", margin: "0.5rem 0" }}>
               <input
                 type="checkbox"
                 name="category"
                 value={option}
-                onChange={(e) => {
-                  handleFilterChange(e);
-                }}
+                onChange={handleFilterChange}
               />
               {" " + option.charAt(0).toUpperCase() + option.slice(1)}
             </label>
@@ -98,7 +107,7 @@ const FilterPopup = ({
             inputId="currency-germany"
             input="minvalue"
             mode="currency"
-            onChange={(e) => handleMinValueChange(e)}
+            onChange={handleMinValueChange}
             currency="EUR"
             locale="de-DE"
           />
@@ -107,12 +116,18 @@ const FilterPopup = ({
           <InputNumber
             inputId="currency-germany"
             input="maxvalue"
-            onChange={(e) => handleMaxValueChange(e)}
+            onChange={handleMaxValueChange}
             mode="currency"
             currency="EUR"
             locale="de-DE"
           />
-          <Button label="Apply" />
+          <Button
+            label="Apply"
+            onClick={() => {
+              onApply();
+              onClose();
+            }}
+          />
         </div>
       </div>
     </>
