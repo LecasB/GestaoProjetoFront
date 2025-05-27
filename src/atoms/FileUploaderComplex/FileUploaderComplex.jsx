@@ -1,36 +1,59 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FileUpload } from "primereact/fileupload";
 import { Button } from "primereact/button";
 import { Tag } from "primereact/tag";
 
-export default function AdvanceDemo({ images = [] }) {
+export default function FileUploaderComplex({
+  images = [],
+  onNewImages,
+  maxImages = 3,
+  currentCount = 0,
+}) {
   const [preloadedFiles, setPreloadedFiles] = useState([]);
-  const [totalSize, setTotalSize] = useState(0);
 
   useEffect(() => {
     const preloaded = images.map((url, index) => ({
       name: `image-${index}.jpg`,
       objectURL: url,
-      size: 0, // ou qualquer valor fictício
+      size: 0,
       type: "image/jpeg",
     }));
     setPreloadedFiles(preloaded);
-    setTotalSize(0); // não sabemos o tamanho real sem fetch
   }, [images]);
 
+  const handleUpload = (event) => {
+    const incomingFiles = event.files;
+    const remainingSlots = maxImages - currentCount;
+
+    if (remainingSlots <= 0) {
+      return;
+    }
+
+    const filesToSend = incomingFiles.slice(0, remainingSlots);
+
+    const preparedFiles = filesToSend.map((file) => ({
+      file,
+      objectURL: URL.createObjectURL(file),
+      name: file.name,
+      size: file.size,
+      type: file.type,
+    }));
+
+    if (onNewImages) {
+      onNewImages(preparedFiles.map((f) => f.file));
+    }
+  };
+
   const handleRemove = (fileName) => {
-    setPreloadedFiles((prev) => {
-      const updated = prev.filter((f) => f.name !== fileName);
-      setTotalSize(updated.reduce((acc, f) => acc + f.size, 0));
-      return updated;
-    });
+    setPreloadedFiles((prev) => prev.filter((f) => f.name !== fileName));
   };
 
   return (
     <div className="card">
       <FileUpload
         name="demo[]"
-        url="/api/upload"
+        customUpload
+        uploadHandler={handleUpload}
         multiple
         accept="image/*"
         maxFileSize={1000000}
@@ -39,7 +62,6 @@ export default function AdvanceDemo({ images = [] }) {
         }
       />
 
-      {/* Mostrar imagens já existentes (pre-carregadas) */}
       {preloadedFiles.length > 0 && (
         <div className="mt-4">
           <h5>Imagens Recebidas</h5>
