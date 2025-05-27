@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import CardItem from "../../atoms/CardItem/CardItem";
 import "./CardsList.scss";
 
-const CardsList = ({ id, filters, numOfResults }) => {
+const CardsList = ({ id, filters, numOfResults, itemType }) => {
   const [items, setItems] = useState([]);
+  console.log("YAUUU:" + itemType)
 
   const getItems = async () => {
     try {
@@ -11,7 +12,11 @@ const CardsList = ({ id, filters, numOfResults }) => {
       let url = "";
 
       if (id) {
-        url = `${baseUrl}/user/${id}`; 
+        if (itemType == "WISHLIST"){
+        url = `https://xuoapi.azurewebsites.net/api/v1/favorite/getAllByUserId/${id}`; 
+        }else{
+        url = `${baseUrl}/user/${id}`;
+        }
       } else {
         url = filters ? `${baseUrl}?${filters}` : baseUrl;
       }
@@ -28,7 +33,7 @@ const CardsList = ({ id, filters, numOfResults }) => {
 
   useEffect(() => {
     getItems();
-  }, [id, filters]);
+  }, [id, filters, itemType]);
 
   useEffect(() => {
     if (typeof numOfResults === "function") {

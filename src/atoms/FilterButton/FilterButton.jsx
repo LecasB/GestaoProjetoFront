@@ -1,16 +1,37 @@
 import { useState, useRef, useEffect } from "react";
+import { useSearchParams, useParams } from "react-router";
 import "./FilterButton.scss";
 
 const FilterButton = ({ onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [value, setValue] = useState("All Items")
   const buttonRef = useRef(null);
 
   const toggleMenu = () => setIsOpen((prev) => !prev);
 
-  const handleOptionClick = (option) => {
-    setIsOpen(false);
-    if (onSelect) onSelect(option);
-  };
+  const [searchParams, setSearchParams] = useSearchParams();
+
+const handleOptionClick = (option) => {
+  setIsOpen(false);
+  if (onSelect) onSelect(option);
+  setValue(option);
+
+  switch (option) {
+    case "VENDIDOS":
+      searchParams.set("items", "sold");
+      break;
+    case "COMPRADOS":
+      searchParams.set("items", "bought");
+      break;
+    case "WISHLIST":
+      searchParams.set("items", "wishlist");
+      break;
+    default:
+      searchParams.delete("items");
+  }
+
+  setSearchParams(searchParams);
+};
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -28,7 +49,7 @@ const FilterButton = ({ onSelect }) => {
         className={`filter-button ${isOpen ? "open" : ""}`}
         onClick={toggleMenu}
       >
-        <span> FILTER </span>
+        <span>{value}</span>
         <svg
           className="arrow-icon"
           xmlns="http://www.w3.org/2000/svg"

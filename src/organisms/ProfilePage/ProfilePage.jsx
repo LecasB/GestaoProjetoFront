@@ -21,6 +21,8 @@ const ProfilePage = () => {
   const [imageName, setImageName] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [userRate, setUserRate] = useState(0);
+  const [filterValue, setFilterValue] = useState("All Items");
+
   const fileUploadRef = useRef(null);
 
   const updateProfile = async () => {
@@ -279,9 +281,9 @@ const ProfilePage = () => {
           }}
         >
           <h1 style={{ padding: "0px 0px 0px 20px" }}>Items</h1>
-          <FilterButton />
+          {userDetails._id == sessionStorage.getItem("id") && <FilterButton onSelect={setFilterValue} />}
         </div>
-        <CardsList id={userDetails._id} />
+        <CardsList id={userDetails._id} itemType={filterValue} />
       </div>
     </div>
   );

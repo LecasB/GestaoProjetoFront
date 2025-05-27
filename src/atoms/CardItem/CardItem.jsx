@@ -7,26 +7,20 @@ const CardItem = ({ id, image, name, price }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const userId = sessionStorage.getItem("id");
-    if (!userId) return;
+  const userId = sessionStorage.getItem("id");
+  if (!userId) return;
 
-    fetch(
-      `https://xuoapi.azurewebsites.net/api/v1/favorite/getAllByUserId/${userId}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        if (Array.isArray(data.items)) {
-          const favFound = data.items.some((fav) => fav._id === id);
-          setIsFavourite(favFound);
-        } else {
-          setIsFavourite(false);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching favorites:", error);
-        setIsFavourite(false);
-      });
-  }, [id]);
+  fetch(`https://xuoapi.azurewebsites.net/api/v1/favorite/getAllByUserId/${userId}`)
+    .then((response) => response.json())
+    .then((data) => {
+      const favFound = data.some((fav) => fav._id === id);
+      setIsFavourite(favFound);
+    })
+    .catch((error) => {
+      console.error("Error fetching favorites:", error);
+      setIsFavourite(false);
+    });
+}, [id]);
 
   return (
     <div className="card-item" style={{ position: "relative" }}>
