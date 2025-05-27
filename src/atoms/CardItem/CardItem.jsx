@@ -11,17 +11,21 @@ const CardItem = ({ id, image, name, price }) => {
 
   useEffect(() => {
     if (!userId || !id) return;
-  
-    
+
+    fun();
+  }, [id, userId]);
+
+  const fun = async () => {
     fetch(`https://xuoapi.azurewebsites.net/api/v1/items/${id}`)
       .then((response) => response.json())
       .then((itemData) => {
         const isUserOwner = itemData.idseller === userId;
         setIsOwner(isUserOwner);
-  
-        
+
         if (!isUserOwner) {
-          fetch(`https://xuoapi.azurewebsites.net/api/v1/favorite/getAllByUserId/${userId}`)
+          fetch(
+            `https://xuoapi.azurewebsites.net/api/v1/favorite/getAllByUserId/${userId}`
+          )
             .then((response) => response.json())
             .then((favorites) => {
               const favFound = favorites.some((fav) => fav._id === id);
@@ -35,38 +39,43 @@ const CardItem = ({ id, image, name, price }) => {
       .catch((error) => {
         console.error("Error fetching item data:", error);
       });
-  }, [id, userId]);
-  
+  };
 
-  const handleFavouriteClick = () => {
+  const handleFavouriteClick = async () => {
     if (!userId) {
       alert("Please log in to add to favourites.");
       return;
     }
-    
-    const url = isOwner ? navigate(`/edit-item?id=${id}`)
-    : isFavourite
-      ? `https://xuoapi.azurewebsites.net/api/v1/favorite/deleteFavorite`
-      : `https://xuoapi.azurewebsites.net/api/v1/favorite/addFavorite`;
+    let url = "";
+    if (isOwner) {
+      navigate(`/edit-item?id=${id}`);
+      return;
+    } else if (isFavourite) {
+      url = "https://xuoapi.azurewebsites.net/api/v1/favorite/deleteFavorite";
+    } else {
+      url = "https://xuoapi.azurewebsites.net/api/v1/favorite/addFavorite";
+    }
 
-    fetch(url, {
-      method: isFavourite ? "DELETE" : "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        iduser: userId,
-        iditem: id,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setIsFavourite(!isFavourite);
+    if (!isOwner) {
+      await fetch(url, {
+        method: isFavourite ? "DELETE" : "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          iduser: userId,
+          iditem: id,
+        }),
       })
-      .catch((error) => {
-        console.error("Error updating favourites:", error);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          setIsFavourite(!isFavourite);
+        })
+        .catch((error) => {
+          console.error("Error updating favourites:", error);
+        });
+    }
   };
 
   const iconSrc = isOwner
