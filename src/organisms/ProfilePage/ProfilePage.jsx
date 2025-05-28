@@ -9,6 +9,7 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { FileUpload } from "primereact/fileupload";
 import FilterButton from "../../atoms/FilterButton/FilterButton";
 import { Button } from "primereact/button";
+import PopupUserInfo from "../../molecules/PopupUserInfo/PopupUserInfo";
 
 const ProfilePage = () => {
   const [searchParams] = useSearchParams();
@@ -23,32 +24,34 @@ const ProfilePage = () => {
   const [imageFile, setImageFile] = useState(null);
   const [userRate, setUserRate] = useState(0);
   const [filterValue, setFilterValue] = useState("All Items");
+  const [info, setInfo] = useState("followers");
+  const [showPopupUser, setShowPopupUser] = useState(false);
 
   const fileUploadRef = useRef(null);
 
   const updateProfile = async () => {
-    
-    try {
-      if (username != userDetails.username){
-      const checkResponse = await fetch(
-        `https://xuoapi.azurewebsites.net/api/v1/user/usernameAvailable`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username: username,
-          }),
-        }
-      );
-      const checkData = await checkResponse.json();
 
-      if (!checkData.available) {
-        alert("O nome de utilizador já está em uso.");
-        return;
+    try {
+      if (username != userDetails.username) {
+        const checkResponse = await fetch(
+          `https://xuoapi.azurewebsites.net/api/v1/user/usernameAvailable`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: username,
+            }),
+          }
+        );
+        const checkData = await checkResponse.json();
+
+        if (!checkData.available) {
+          alert("O nome de utilizador já está em uso.");
+          return;
+        }
       }
-    }
 
       const updateResponse = await fetch(
         `https://xuoapi.azurewebsites.net/api/v1/user/updateInfo`,
@@ -151,6 +154,10 @@ const ProfilePage = () => {
       });
   };
 
+  const handleClose = () => {
+    setShowPopupUser(false);
+  }
+
   const renderStars = () => {
     const stars = [];
     for (let i = 0; i < 5; i++) {
@@ -191,7 +198,9 @@ const ProfilePage = () => {
 
   return (
     <div>
+      {showPopupUser && <PopupUserInfo info={info} id={userDetails._id} close={handleClose} />}
       <Dialog
+        ola="aaa"
         header="Editar Perfil"
         visible={visible}
         style={{ width: "50vw" }}
@@ -219,6 +228,7 @@ const ProfilePage = () => {
           name="demo[]"
           url="/api/upload"
           accept="image/*"
+          chooseLabel="Select Image"
           auto
           customUpload
           uploadHandler={customBase64Uploader}
@@ -242,12 +252,21 @@ const ProfilePage = () => {
           <div className="cmp-profile-page__info__top">
             <div className="cmp-profile-page__info__top__userNstars">
               <h1>@{userDetails.username}</h1>
-              <p style={{fontSize: "20px"}}>
-                {`(${userRate.averageRate})`} 
+              <p style={{ fontSize: "20px", display: "flex", alignItems: "center", gap: "5px" }}>
+                {`(${userRate.averageRate})`}
+                <span style={{ paddingLeft: "5px" }}>{renderStars()}</span>
+                <span
+                  onClick={() => {
+                    setInfo("reviews");
+                    setShowPopupUser(!showPopupUser);
+                  }}
+                  style={{ fontSize: "14px" }}
+                >
+                  ({userRate.totalReviews}) Reviews
+                </span>
+
               </p>
-              <p>
-              {renderStars()}
-              </p>
+
             </div>
             {userDetails._id === sessionStorage.getItem("id") ? (
               <div
@@ -267,11 +286,11 @@ const ProfilePage = () => {
           </div>
 
           <div className="cmp-profile-page__info__middle">
-            <p style={{cursor: "pointer"}}onClick={() => {}}>Following: 4</p>
-            <p style={{cursor: "pointer"}}onClick={() => {}}>Followers: 5</p>
+            <p style={{ cursor: "pointer" }} onClick={() => { setInfo("following"), setShowPopupUser(!showPopupUser) }}>Following: 4</p>
+            <p style={{ cursor: "pointer" }} onClick={() => { setInfo("followers"), setShowPopupUser(!showPopupUser) }}>Followers: 5</p>
             <p>Items: {numberItems}</p>
           </div>
-          <p style={{padding: "0px 0px 0px 25px", cursor: "pointer"}}>Reviews: {userRate.totalReviews}</p>
+
 
           <p className="cmp-profile-page__info__description">
             Description: {userDetails.descricao}
