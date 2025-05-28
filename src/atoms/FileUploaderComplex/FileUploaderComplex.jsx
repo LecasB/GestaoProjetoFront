@@ -61,32 +61,6 @@ export default function FileUploaderComplex({
           <p className="m-0">Arraste e largue imagens aqui para carregar.</p>
         }
       />
-
-      {preloadedFiles.length > 0 && (
-        <div className="mt-4">
-          <h5>Imagens Recebidas</h5>
-          {preloadedFiles.map((file) => (
-            <div key={file.name} className="flex align-items-center my-2">
-              <img
-                src={file.objectURL}
-                alt={file.name}
-                width={100}
-                className="mr-3"
-              />
-              <div className="flex flex-column mr-3">
-                <span>{file.name}</span>
-                <small>{Math.round(file.size / 1024)} KB</small>
-              </div>
-              <Tag value="preloaded" severity="info" className="mr-2" />
-              <Button
-                icon="pi pi-times"
-                className="p-button-danger p-button-rounded p-button-outlined"
-                onClick={() => handleRemove(file.name)}
-              />
-            </div>
-          ))}
-        </div>
-      )}
     </div>
   );
 }

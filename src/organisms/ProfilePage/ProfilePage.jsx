@@ -26,7 +26,9 @@ const ProfilePage = () => {
   const fileUploadRef = useRef(null);
 
   const updateProfile = async () => {
+    
     try {
+      if (username != userDetails.username){
       const checkResponse = await fetch(
         `https://xuoapi.azurewebsites.net/api/v1/user/usernameAvailable`,
         {
@@ -45,6 +47,7 @@ const ProfilePage = () => {
         alert("O nome de utilizador já está em uso.");
         return;
       }
+    }
 
       const updateResponse = await fetch(
         `https://xuoapi.azurewebsites.net/api/v1/user/updateInfo`,

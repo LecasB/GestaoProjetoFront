@@ -5,7 +5,8 @@ import { InputNumber } from "primereact/inputnumber";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
-import FileUploaderComplex from "../../atoms/FileUploaderComplex/FileUploaderComplex";
+import { Tag } from "primereact/tag";
+
 
 const EditItemPage = () => {
   const [searchParams] = useSearchParams();
@@ -49,14 +50,9 @@ const EditItemPage = () => {
     }
   };
 
-  const handleNewImages = (files) => {
-    const totalImages = images.length + newImages.length;
-    const availableSlots = 3 - totalImages;
-
-    if (availableSlots <= 0) return;
-
-    const filesToAdd = files.slice(0, availableSlots);
-    setNewImages((prev) => [...prev, ...filesToAdd]);
+  const handleRemove = (fileName) => {
+    setImages((prev) => prev.filter((f) => f !== fileName));
+    console.log("Removed image:", fileName, "Current images:", images);
   };
 
   const handleSubmit = () => {
@@ -65,7 +61,6 @@ const EditItemPage = () => {
       description,
       condition,
       price,
-      // images são tratadas separadamente
     };
 
     console.log("Submitting item:", updatedItem);
@@ -107,12 +102,27 @@ const EditItemPage = () => {
         locale="de-DE"
         className="mb-2"
       />
-      <FileUploaderComplex
-        images={images}
-        onNewImages={handleNewImages}
-        currentCount={images.length + newImages.length}
-        maxImages={3}
-      />
+      {images.length > 0 && (
+        <div className="mt-4">
+          <h5>Imagens Recebidas</h5>
+          {images.map((file) => (
+            console.log(file),
+            <div key={file} className="flex align-items-center my-2">
+              <img
+                src={file}
+                alt={""}
+                width={100}
+                className="mr-3"
+              />      
+              <Button
+                icon="pi pi-times"
+                className="p-button-danger p-button-rounded p-button-outlined"
+                onClick={() => handleRemove(file)}
+              />
+            </div>
+          ))}
+        </div>
+      )}
       <Button label="Submit" onClick={handleSubmit} className="mt-3" />
     </div>
   );
