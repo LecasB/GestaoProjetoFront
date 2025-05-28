@@ -8,6 +8,7 @@ import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { FileUpload } from "primereact/fileupload";
 import FilterButton from "../../atoms/FilterButton/FilterButton";
+import { Button } from "primereact/button";
 
 const ProfilePage = () => {
   const [searchParams] = useSearchParams();
@@ -241,11 +242,14 @@ const ProfilePage = () => {
           <div className="cmp-profile-page__info__top">
             <div className="cmp-profile-page__info__top__userNstars">
               <h1>@{userDetails.username}</h1>
+              <p style={{fontSize: "20px"}}>
+                {`(${userRate.averageRate})`} 
+              </p>
               <p>
-                {`(${userRate.averageRate})`} {renderStars()}
+              {renderStars()}
               </p>
             </div>
-            {userDetails._id === sessionStorage.getItem("id") && (
+            {userDetails._id === sessionStorage.getItem("id") ? (
               <div
                 style={{ cursor: "pointer" }}
                 onClick={() => setVisible(true)}
@@ -255,15 +259,19 @@ const ProfilePage = () => {
                   <FaPencilAlt />
                 </span>
               </div>
+            ) : (
+              <div>
+                <Button label="Follow"></Button>
+              </div>
             )}
           </div>
 
           <div className="cmp-profile-page__info__middle">
-            <p>Followers: 5</p>
-            <p>Following: 4</p>
+            <p style={{cursor: "pointer"}}onClick={() => {}}>Following: 4</p>
+            <p style={{cursor: "pointer"}}onClick={() => {}}>Followers: 5</p>
             <p>Items: {numberItems}</p>
           </div>
-          <p>Reviews: {userRate.totalReviews}</p>
+          <p style={{padding: "0px 0px 0px 25px", cursor: "pointer"}}>Reviews: {userRate.totalReviews}</p>
 
           <p className="cmp-profile-page__info__description">
             Description: {userDetails.descricao}
