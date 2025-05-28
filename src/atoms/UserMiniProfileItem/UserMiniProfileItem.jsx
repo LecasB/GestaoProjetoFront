@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const UserMiniProfileItem = ({ id }) => {
   const [userDetails, setUserDetails] = useState("");
+  const [userRating, setUserRating] = useState("");
   const navigate = useNavigate();
 
   const getUserInfo = async () => {
@@ -19,15 +20,31 @@ const UserMiniProfileItem = ({ id }) => {
       });
   };
 
+  const getUserRate = () => {
+    fetch(
+      `https://xuoapi.azurewebsites.net/api/v1/review/${id}/rate`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("User rate data:", data);
+        setUserRating(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching user rate:", error);
+      });
+  };
+
+  
+
   useEffect(() => {
     getUserInfo();
+    getUserRate();
   }, []);
 
-  const rating = 4.5;
   const renderStars = () => {
     const stars = [];
     for (let i = 0; i < 5; i++) {
-      if (rating >= i + 1) {
+      if (userRating.averageRate >= i + 1) {
         stars.push(
           <img
             key={i}
@@ -35,7 +52,7 @@ const UserMiniProfileItem = ({ id }) => {
             src="https://xuobucket.blob.core.windows.net/utils/estrelita.png"
           />
         );
-      } else if (rating > i) {
+      } else if (userRating.averageRate > i) {
         stars.push(
           <img
             key={i}
@@ -44,7 +61,7 @@ const UserMiniProfileItem = ({ id }) => {
           />
         );
       } else {
-        stars.push(<FaRegStar key={i} className="star" />);
+        ""
       }
     }
     return stars;
@@ -65,7 +82,7 @@ const UserMiniProfileItem = ({ id }) => {
       </div>
       <div className="ratingInfo">
         {renderStars()}
-        <span className="reviews">(5)</span>
+        <span className="reviews">({userRating.totalReviews} Reviews)</span>
       </div>
     </div>
   );

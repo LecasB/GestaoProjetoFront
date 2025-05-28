@@ -1,0 +1,8 @@
+.filter-popup{
+    top: 180px;
+
+    @media screen and (max-width: 470px) {
+        top: 200px;
+        
+    }
+}
