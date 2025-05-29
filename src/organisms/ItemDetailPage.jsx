@@ -4,11 +4,13 @@ import UserMiniProfileItem from "../atoms/UserMiniProfileItem/UserMiniProfileIte
 import ReportButton from "../atoms/ReportButton/ReportButton";
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import PopupConfirmation from "../atoms/PopupConfirmation/PopupConfirmation"
 
 const ItemDetailPage = () => {
   const [itemDetails, setItemDetails] = useState("");
   const [buyPopup, setBuyPopup] = useState(false);
   const [searchParams] = useSearchParams();
+  const [tipoCompra, setTipoCompra] = useState("");
   const itemId = searchParams.get("id")
     ? searchParams.get("id")
     : "6827c531cd393c9e354013c5";
@@ -25,35 +27,13 @@ const ItemDetailPage = () => {
       });
   };
 
-  const handleNegociar = async () => {
-    const idsender = sessionStorage.getItem("id");
-    const idreceiver = itemDetails.idseller;
-
-    const payload = {
-      idsender: idsender,
-      idreceiver: idreceiver,
-      date: new Date().toISOString(),
-      message: `Ola, é possivel negociar o preço do artigo ${itemDetails.title}`,
-    };
-
-    try {
-      await fetch("https://xuoapi.azurewebsites.net/api/v1/newMessage", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-    } catch (err) {
-      console.error("Erro ao enviar mensagem:", err);
-    }
-  };
-
   useEffect(() => {
     getItemDetails();
   }, []);
   return (
     <div className="cmp-item-detail-page">
+      {(buyPopup && tipoCompra == "buy") && <PopupConfirmation description={`Confirma que quer comprar o produto ${itemDetails.title}`} header={"Confirmação"} id={itemDetails._id} />}
+      {(buyPopup && tipoCompra == "offer") && <PopupConfirmation description={`Deseja negociar o preço do ${itemDetails.title}`} header={"Negociar"} id={itemDetails._id} itemName={itemDetails.title} idseller={itemDetails.idseller} />}
       {itemDetails && (
         <div className="cmp-item-detail-page__item-detail">
           <div>
@@ -65,17 +45,16 @@ const ItemDetailPage = () => {
             <p
               style={{
                 fontSize: "16px",
-                color: `${
-                  itemDetails.condition == "used"
+                color: `${itemDetails.condition == "used"
                     ? "orange"
                     : itemDetails.condition == "new"
-                    ? "green"
-                    : itemDetails.condition == "refurbished"
-                    ? "lightgreen"
-                    : itemDetails.condition == "broken"
-                    ? "red"
-                    : "black"
-                }`,
+                      ? "green"
+                      : itemDetails.condition == "refurbished"
+                        ? "lightgreen"
+                        : itemDetails.condition == "broken"
+                          ? "red"
+                          : "black"
+                  }`,
               }}
             >
               {itemDetails.condition}
@@ -92,13 +71,19 @@ const ItemDetailPage = () => {
                 <>
                   <button
                     className="cmp-item-detail-page__item-detail--description--buttons--btn_primary"
-                    onClick={() => setBuyPopup(true)}
+                    onClick={() => {
+                      setBuyPopup(true);
+                      setTipoCompra("buy");
+                    }}
                   >
                     Comprar
                   </button>
                   <button
                     className="cmp-item-detail-page__item-detail--description--buttons--btn_secondary"
-                    onClick={handleNegociar}
+                    onClick={() => {
+                      setBuyPopup(true);
+                      setTipoCompra("offer");
+                    }}
                   >
                     Negociar
                   </button>
