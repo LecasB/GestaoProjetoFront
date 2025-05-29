@@ -10,6 +10,7 @@ import UpdateProfileForm from "./molecules/UpdateProfileForm/UpdateProfileForm";
 import ItemDetailPage from "./organisms/ItemDetailPage";
 import UploadItemPage from "./organisms/UploadItemPage";
 import ProfilePage from "./organisms/ProfilePage/ProfilePage";
+import LeilaoDetailsPage from "./organisms/LeilaoDetailsPage/LeilaoDetailsPage";
 
 function App() {
   return (
@@ -19,13 +20,14 @@ function App() {
         <Route index path="/login" element={<LoginForm />} />
         <Route path="/signup" element={<SignUpForm />} />
         <Route path="/mensagens" element={<MessagePage />} />
-        <Route path="/test" element={<UpdateProfileForm />} />
+        <Route path="/test" element={<LeilaoDetailsPage />} />
 
         <Route path="/" element={<Layout />}>
           <Route path="/index" element={<TestPage />} />
           <Route path="/item" element={<ItemDetailPage />} />
           <Route path="/newItem" element={<UploadItemPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/leilao" element={<LeilaoDetailsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
