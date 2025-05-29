@@ -9,9 +9,10 @@ const FullChat = ({ user, otherUser }) => {
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState("");
   const [socket, setSocket] = useState(null);
-  const messagesEndRef = useRef(null); // 🔽 referência para scroll
+  const [otherUserData, setOtherUserData] = useState(null);
+  const messagesEndRef = useRef(null);
 
-  // 🔌 Conexão com Socket.IO
+  // Conexão com Socket.IO
   useEffect(() => {
     const socketInstance = io("https://xuosocket-production.up.railway.app/");
     setSocket(socketInstance);
@@ -33,17 +34,12 @@ const FullChat = ({ user, otherUser }) => {
     };
   }, [user, otherUser]);
 
-  // 🔁 Atualiza mensagens ao mudar o destinatário
   useEffect(() => {
     if (otherUser) {
       getMessages();
+      getUserInfo(otherUser);
     }
   }, [otherUser]);
-
-  // 🧼 Faz scroll automático após mensagens serem renderizadas
-  useLayoutEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
-  }, [messages]);
 
   const getMessages = async () => {
     setLoading(true);
@@ -69,6 +65,17 @@ const FullChat = ({ user, otherUser }) => {
       setMessages([]);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const getUserInfo = async (id) => {
+    try {
+      const res = await fetch(`https://xuoapi.azurewebsites.net/api/v1/user/${id}`);
+      const data = await res.json();
+      setOtherUserData(data);
+    } catch (err) {
+      console.error("Erro ao buscar dados do utilizador:", err);
+      setOtherUserData(null);
     }
   };
 
@@ -101,12 +108,29 @@ const FullChat = ({ user, otherUser }) => {
     }
   };
 
+  useLayoutEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
+  }, [messages]);
+
   return (
-    <div className="chat-container">
+    <div
+      className="chat-container"
+      style={{ backgroundColor: loading ? "#232323" : "" }}
+    >
       {!otherUser && <p>Select a user to show the messages</p>}
       {otherUser && loading && <div className="loader"></div>}
       {otherUser && !loading && (
         <>
+          {otherUserData && (
+            <div className="chat-header">
+              <img
+                src={otherUserData.image || "/default-user.png"}
+                alt={otherUserData.username}
+              />
+              <span>{otherUserData.username || "Unknown User"}</span>
+            </div>
+          )}
+  
           <div className="messages">
             {messages.map((msg, index) => (
               <div
@@ -116,9 +140,8 @@ const FullChat = ({ user, otherUser }) => {
                 {msg.message}
               </div>
             ))}
-            <div ref={messagesEndRef} /> {/* 🔚 Scroll target */}
+            <div ref={messagesEndRef} />
           </div>
-
           <div className="input-area">
             <InputEmoji
               value={newMessage}

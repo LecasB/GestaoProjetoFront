@@ -3,25 +3,29 @@
   flex-direction: column;
   width: 80%;
   height: 100vh;
-  border: 1px solid #ccc;
   padding: 1rem;
   box-sizing: border-box;
-  position: relative;
+  background-color: #ffffff;
+  color: white;
+  border: 1px solid #4B4B4B;
+  margin: auto;
+  overflow-x: hidden;
 
   p {
     margin: auto;
-    font-size: 3rem;
+    font-size: 2rem;
     opacity: 70%;
+    color: white;
   }
 
   .loader {
     margin: auto;
-    border: 10px solid #f3f3f3;
-    border-top: 10px solid #3498db;
+    border: 10px solid #4B4B4B;
+    border-top: 10px solid white;
     border-radius: 50%;
-    width: 80px;
-    height: 80px;
-    animation: animate 2s infinite;
+    width: 60px;
+    height: 60px;
+    animation: animate 2s linear infinite;
   }
 
   @keyframes animate {
@@ -40,35 +44,47 @@
     flex-direction: column;
     gap: 0.5rem;
     margin-bottom: 1rem;
+    padding-right: 5px;
   }
 
   .message {
     max-width: 70%;
-    padding: 0.5rem 1rem;
+    padding: 0.7rem 1rem;
     border-radius: 20px;
-    color: white;
-    align-self: flex-end;
+    font-size: 1rem;
+    line-height: 1.4;
+    word-break: break-word;
 
     &.me {
-      background-color: #007bff; // Azul
+      background-color: #007bff;
+      color: white;
       align-self: flex-end;
     }
 
     &.other {
-      background-color: #999999; // Cinza
+      background-color: #373737;
+      color: white;
       align-self: flex-start;
     }
   }
 
   .input-area {
     display: flex;
+    align-items: center;
     gap: 0.5rem;
 
-    input {
+    .InputEmoji {
       flex: 1;
-      padding: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+      background-color: #373737;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+
+      &::placeholder {
+        color: #A59C9C;
+      }
     }
 
     .btn-submit {
@@ -76,8 +92,43 @@
       background-color: #007bff;
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
+      font-weight: bold;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: #5a5a5a;
+      }
     }
   }
+  .chat-header {
+    background-color: #232323;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-bottom: 1px solid #4B4B4B;
+    margin: -1rem -1rem 1rem -1rem;
+    width: calc(100% + 2rem);
+    border-radius: 0;
+  
+    img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #4B4B4B;
+    }
+  
+    span {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: white;
+    }
+  }
+  
 }
