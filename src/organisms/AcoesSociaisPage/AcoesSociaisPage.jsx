@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import SocialActionCard from "../../atoms/SocialCardAction/SocialCardAction"
 
 const AcoesSociaisPage = () => {
   const [data, setData] = useState([]);
@@ -14,17 +15,7 @@ const AcoesSociaisPage = () => {
     <>
       {data.map((item, key) => (
         <div key={key}>
-          <p>{item.title}</p>
-          <p>{item.description}</p>
-          <p>{item.associacao}</p>
-          {item.images && item.images.map((obj, i) => (
-              <img src={obj} alt="" />
-            ))}
-          <ul>
-            {item.objetivos && item.objetivos.map((obj, i) => (
-              <li key={i}>{obj}</li>
-            ))}
-          </ul>
+          <SocialActionCard image={item.images[0]} titulo={item.title} categorias={item.objetivos}/>
         </div>
       ))}
     </>

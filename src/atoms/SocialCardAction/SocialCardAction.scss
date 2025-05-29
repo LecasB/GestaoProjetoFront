@@ -1,10 +1,11 @@
-.socailaction-card {
+.socialaction-card {
   position: relative;
   width: 100%;
   max-width: 350px;
   height: 230px;
   aspect-ratio: 16 / 11; 
   overflow: hidden;
+  margin: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   background-color: #1e272e;
 }
