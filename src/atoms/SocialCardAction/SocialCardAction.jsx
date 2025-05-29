@@ -1,13 +1,14 @@
+import { data } from 'react-router';
 import './SocialCardAction.scss';
 import Image from './ola.jpg'; 
 
-const SocialCardAction = () => {
+const SocialCardAction = ({image, titulo, categorias}) => {
   return (
-    <div className="socailaction-card">
-      <img src={Image} className="image" />
+    <div className="socialaction-card">
+      <img src={image} className="image" />
       <div className="text-overlay">
-        <h2>Canil da Tocha</h2>
-        <p>Mantas, Camisolas, Comida, Brinquedos</p>
+        <h2>{titulo}</h2>
+        <p>{categorias.join(' • ')}</p>
       </div>
     </div>
   );
