@@ -5,8 +5,8 @@ import { InputNumber } from "primereact/inputnumber";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
-import { Tag } from "primereact/tag";
-
+import { FaRegTrashAlt } from "react-icons/fa";
+import "./EditItemPage.scss";
 
 const EditItemPage = () => {
   const [searchParams] = useSearchParams();
@@ -20,11 +20,10 @@ const EditItemPage = () => {
   const [newImages, setNewImages] = useState([]); // novas
 
   const cities = [
-    { name: "New York", code: "NY" },
-    { name: "Rome", code: "RM" },
-    { name: "London", code: "LDN" },
-    { name: "Istanbul", code: "IST" },
-    { name: "Paris", code: "PRS" },
+    { name: "Used", code: "used" },
+    { name: "New", code: "new" },
+    { name: "Refurbished", code: "refurbished" },
+    { name: "Broken", code: "broken" },
   ];
 
   useEffect(() => {
@@ -70,60 +69,61 @@ const EditItemPage = () => {
   return (
     <div>
       <h1>Edit Item Page</h1>
-      <InputText
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="Título"
-        className="mb-2"
-      />
-      <InputTextarea
-        maxLength={100}
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        rows={5}
-        cols={30}
-        className="mb-2"
-        placeholder="Descrição"
-      />
-      <Dropdown
-        value={condition}
-        onChange={(e) => setCondition(e.value)}
-        options={cities}
-        optionLabel="name"
-        placeholder="Condição"
-        className="w-full md:w-14rem mb-2"
-      />
-      <InputNumber
-        inputId="currency-germany"
-        value={price}
-        onValueChange={(e) => setPrice(e.value)}
-        mode="currency"
-        currency="EUR"
-        locale="de-DE"
-        className="mb-2"
-      />
-      {images.length > 0 && (
-        <div className="mt-4">
-          <h5>Imagens Recebidas</h5>
-          {images.map((file) => (
-            console.log(file),
-            <div key={file} className="flex align-items-center my-2">
-              <img
-                src={file}
-                alt={""}
-                width={100}
-                className="mr-3"
-              />      
-              <Button
-                icon="pi pi-times"
-                className="p-button-danger p-button-rounded p-button-outlined"
-                onClick={() => handleRemove(file)}
-              />
-            </div>
-          ))}
+      <form>
+        <div>
+          <InputText
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Título"
+            className="mb-2"
+          />
+          <Dropdown
+            value={condition}
+            onChange={(e) => setCondition(e.value)}
+            options={cities}
+            optionLabel="name"
+            placeholder="Condição"
+            className="w-full md:w-14rem mb-2"
+          />
+          <InputNumber
+            inputId="currency-germany"
+            value={price}
+            onValueChange={(e) => setPrice(e.value)}
+            mode="currency"
+            currency="EUR"
+            locale="de-DE"
+            className="mb-2"
+          />
         </div>
-      )}
-      <Button label="Submit" onClick={handleSubmit} className="mt-3" />
+        <InputTextarea
+          maxLength={100}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          rows={10}
+          cols={70}
+          className="mb-2"
+          placeholder="Descrição"
+        />
+        {images.length > 0 && (
+          <div className="mt-4">
+            <h5>Imagens Recebidas</h5>
+            {images.map(
+              (file) => (
+                console.log(file),
+                (
+                  <div key={file} className="img-div">
+                    <img src={file} alt={""} width={100} className="mr-3" />
+                    <div className="delete-btn">
+                      <FaRegTrashAlt onClick={() => handleRemove(file)} />
+                    </div>
+                  </div>
+                )
+              )
+            )}
+          </div>
+        )}
+        <Button label="Submit" onClick={handleSubmit} className="mt-3" />
+      </form>
     </div>
   );
 };
