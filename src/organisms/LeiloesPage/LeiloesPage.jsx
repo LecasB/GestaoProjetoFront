@@ -5,8 +5,8 @@ const LeiloesPage = () => {
   const [data, setData] = useState([]);
 
   function formatDateString(isoDate) {
-    const dateOnly = isoDate.split("T")[0]; 
-    return dateOnly
+    const dateOnly = isoDate.split("T")[0];
+    return dateOnly;
   }
 
   useEffect(() => {
@@ -17,13 +17,19 @@ const LeiloesPage = () => {
   }, []);
 
   return (
-    <>
+    <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
       {data.map((item, key) => (
         <div key={key}>
-          <LeilaoCard descricao={item.descricao} dataInicio={formatDateString(item.dataInicio)} dataFim={formatDateString(item.dataFim)} imagem={item.imagem[0]} preco={item.preco} />
+          <LeilaoCard
+            descricao={item.descricao}
+            dataInicio={formatDateString(item.dataInicio)}
+            dataFim={formatDateString(item.dataFim)}
+            imagem={item.imagem[0]}
+            preco={item.preco}
+          />
         </div>
       ))}
-    </>
+    </div>
   );
 };
 

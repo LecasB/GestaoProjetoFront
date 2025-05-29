@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import SocialActionCard from "../../atoms/SocialCardAction/SocialCardAction"
+import SocialActionCard from "../../atoms/SocialCardAction/SocialCardAction";
 
 const AcoesSociaisPage = () => {
   const [data, setData] = useState([]);
@@ -12,13 +12,17 @@ const AcoesSociaisPage = () => {
   }, []);
 
   return (
-    <>
+    <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
       {data.map((item, key) => (
         <div key={key}>
-          <SocialActionCard image={item.images[0]} titulo={item.title} categorias={item.objetivos}/>
+          <SocialActionCard
+            image={item.images[0]}
+            titulo={item.title}
+            categorias={item.objetivos}
+          />
         </div>
       ))}
-    </>
+    </div>
   );
 };
 
