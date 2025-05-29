@@ -37,9 +37,34 @@ const MessagePage = () => {
   };
 
   return (
-    <div className="messagePage" style={{ display: "flex" }}>
+    <div className="messagePage" style={{ display: "flex", height: "100vh" }}>
       <UserList list={userList} handleClick={handleClick} />
-      <FullChat user={user} otherUser={selectUser} />
+
+      {selectUser ? (
+        <FullChat user={user} otherUser={selectUser} />
+      ) : (
+        <div
+          style={{
+            flex: 1,
+            backgroundColor: "#232323",
+            color: "#A59C9C",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            textAlign: "center",
+            padding: "2rem",
+          }}
+        >
+          <img
+            src="/imgs/xuo.png"
+            alt="XUO Logo"
+            style={{ width: "150px", marginBottom: "2rem" }}
+          />
+          <h2 style={{ color: "white" }}>Bem-vindo ao chat</h2>
+          <p>Clique num utilizador à esquerda para começar a conversa.</p>
+        </div>
+      )}
     </div>
   );
 };
