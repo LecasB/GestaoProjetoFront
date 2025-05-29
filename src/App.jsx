@@ -16,7 +16,10 @@ import GerirUsers from "./organisms/BackOffice/GerirUsers";
 import SeachPage from "./organisms/SearchPage/SearchPage";
 import EditItemPage from "./organisms/EditItemPage/EditItemPage";
 import AcoesSociaisPage from "./organisms/AcoesSociaisPage/AcoesSociaisPage";
-import LeiloesPage from "./organisms/LeiloesPage/LeiloesPage";import LeilaoDetailsPage from "./organisms/LeilaoDetailsPage/LeilaoDetailsPage";
+
+import LeiloesPage from "./organisms/LeiloesPage/LeiloesPage";
+import LeilaoDetailsPage from "./organisms/LeilaoDetailsPage/LeilaoDetailsPage";
+import AcaoSocialDetails from "./organisms/AcaoSocialDetails/AcaoSocialDetails";
 
 function App() {
   return (
@@ -36,14 +39,15 @@ function App() {
           <Route path="/search" element={<SeachPage />} />
           <Route path="/edit-item" element={<EditItemPage />} />
           <Route path="/acoes-sociais" element={<AcoesSociaisPage />} />
+          <Route path="/acao-social" element={<AcaoSocialDetails />} />
           <Route path="/leiloes" element={<LeiloesPage/>}/>
+           <Route path="/leilao" element={<LeilaoDetailsPage />} />
         </Route>
 
         <Route path="/backoffice" element={<BackendLayout />}>
           <Route index element={<IndexAdmin />} />
           <Route path="gerirItems" element={<GerirItem />} />
           <Route path="gerirUsers" element={<GerirUsers />} />
-          <Route path="/leilao" element={<LeilaoDetailsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

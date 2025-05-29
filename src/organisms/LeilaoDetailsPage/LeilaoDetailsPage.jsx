@@ -1,42 +1,42 @@
-import ImageCarrousel from "../../atoms/ImageCarrousel/ImageCarrousel";
-import "./LeilaoDetailsPage.scss";
-import UserMiniProfileItem from "../../atoms/UserMiniProfileItem/UserMiniProfileItem";
-import ReportButton from "../../atoms/ReportButton/ReportButton";
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import ImageCarrousel from "../../atoms/ImageCarrousel/ImageCarrousel";
+import UserMiniProfileItem from "../../atoms/UserMiniProfileItem/UserMiniProfileItem";
+import ReportButton from "../../atoms/ReportButton/ReportButton";
+import "./LeilaoDetailsPage.scss";
 
 const LeilaoDetailsPage = () => {
-  const [itemDetails, setItemDetails] = useState("");
+  const [itemDetails, setItemDetails] = useState(null);
   const [searchParams] = useSearchParams();
   const [showPopup, setShowPopup] = useState(false);
   const [bidAmount, setBidAmount] = useState("");
   const [highestBid, setHighestBid] = useState(0);
   const [lastBidder, setLastBidder] = useState("Desconhecido");
 
-  const itemId = searchParams.get("id")
-    ? searchParams.get("id")
-    : "6827c531cd393c9e354013c5";
+  const itemId = searchParams.get("id") ?? "6827c531cd393c9e354013c5";
 
-  const getItemDetails = async () => {
-    await fetch(`https://xuoapi.azurewebsites.net/api/v1/items/${itemId}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setItemDetails(data);
-      })
-      .catch((error) => {
-        console.error("Erro ao buscar detalhes do item:", error);
-      });
+  const getBidderName = async (id) => {
+    try {
+      const res = await fetch(`https://xuoapi.azurewebsites.net/api/v1/user/${id}`);
+      if (!res.ok) return "Desconhecido";
+      const user = await res.json();
+      return user.username || "Desconhecido";
+    } catch (error) {
+      console.error("Erro ao buscar nome do utilizador:", error);
+      return "Desconhecido";
+    }
   };
 
   const getAuctionDetails = async () => {
     try {
-      const response = await fetch(
-        `https://xuoapi.azurewebsites.net/api/v1/leilao/${itemId}`
-      );
+      const response = await fetch(`https://xuoapi.azurewebsites.net/api/v1/leilao/${itemId}`);
       const data = await response.json();
 
-      setHighestBid(data.preco);
-      setLastBidder(data.nomeUser || data.idUser || "Desconhecido");
+      setItemDetails(data);
+      setHighestBid(data.preco || 0);
+
+      const name = await getBidderName(data.idUser || "");
+      setLastBidder(name);
     } catch (error) {
       console.error("Erro ao buscar dados do leilão:", error);
     }
@@ -57,7 +57,6 @@ const LeilaoDetailsPage = () => {
 
     try {
       const userId = sessionStorage.getItem("id");
-
       if (!userId) {
         alert("Utilizador não autenticado.");
         return;
@@ -77,9 +76,7 @@ const LeilaoDetailsPage = () => {
         }
       );
 
-      if (!response.ok) {
-        throw new Error("Erro ao atualizar o leilão.");
-      }
+      if (!response.ok) throw new Error("Erro ao atualizar o leilão.");
 
       await getAuctionDetails();
       setShowPopup(false);
@@ -91,7 +88,6 @@ const LeilaoDetailsPage = () => {
   };
 
   useEffect(() => {
-    getItemDetails();
     getAuctionDetails();
   }, []);
 
@@ -100,12 +96,11 @@ const LeilaoDetailsPage = () => {
       {itemDetails && (
         <div className="cmp-leilao-page__item-detail">
           <div>
-            <ImageCarrousel images={itemDetails.images} />
-            <UserMiniProfileItem id={itemDetails.idseller} />
+            <ImageCarrousel images={itemDetails.imagem} />
+            <UserMiniProfileItem id={itemDetails.idVendedor} />
           </div>
           <div className="cmp-leilao-page__item-detail--description">
-            <h1>{itemDetails.title}</h1>
-            <p>{itemDetails.description}</p>
+            <p>{itemDetails.descricao}</p>
             <div className="cmp-leilao-page__item-detail--description--price-and-report">
               <b>Oferta mais alta: {highestBid}€</b>
               <span>Última oferta feita por: {lastBidder}</span>
@@ -132,7 +127,7 @@ const LeilaoDetailsPage = () => {
               min={highestBid + 1}
               value={bidAmount}
               onChange={(e) => setBidAmount(e.target.value)}
-              placeholder="Ex: 40"
+              placeholder={"Ex: " + (highestBid + 1)}
             />
             <div className="popup-buttons">
               <button onClick={handleBid}>Licitar</button>

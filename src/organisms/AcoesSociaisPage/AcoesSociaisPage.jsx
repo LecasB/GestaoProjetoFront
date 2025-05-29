@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import SocialActionCard from "../../atoms/SocialCardAction/SocialCardAction";
 
 const AcoesSociaisPage = () => {
@@ -14,13 +15,17 @@ const AcoesSociaisPage = () => {
   return (
     <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
       {data.map((item, key) => (
-        <div key={key}>
+        <Link
+          key={key}
+          to={`/acao-social?id=${item._id}`}
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
           <SocialActionCard
             image={item.images[0]}
             titulo={item.title}
             categorias={item.objetivos}
           />
-        </div>
+        </Link>
       ))}
     </div>
   );
