@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import LeilaoCard from "../../atoms/LeilaoCard/LeilaoCard";
 
 const LeiloesPage = () => {
   const [data, setData] = useState([]);
 
   function formatDateString(isoDate) {
-    const dateOnly = isoDate.split("T")[0];
-    return dateOnly;
+    return isoDate.split("T")[0];
   }
 
   useEffect(() => {
@@ -19,7 +19,11 @@ const LeiloesPage = () => {
   return (
     <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
       {data.map((item, key) => (
-        <div key={key}>
+        <Link
+          key={key}
+          to={`/leilao?id=${item._id}`} // <- usando search param
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
           <LeilaoCard
             descricao={item.descricao}
             dataInicio={formatDateString(item.dataInicio)}
@@ -27,7 +31,7 @@ const LeiloesPage = () => {
             imagem={item.imagem[0]}
             preco={item.preco}
           />
-        </div>
+        </Link>
       ))}
     </div>
   );
