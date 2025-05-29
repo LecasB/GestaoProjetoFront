@@ -3,14 +3,20 @@ import LoginForm from "./molecules/LoginForm/LoginForm";
 import MessagePage from "./molecules/Messages/MessagePage";
 import "./App.scss";
 import SignUpForm from "./molecules/SingUpForm/SignUpForm";
-import FileUpload from "./atoms/FileUpload/FileUpload";
 import Layout from "./molecules/Layout/Layout";
 import TestPage from "./organisms/TestPage";
 import UpdateProfileForm from "./molecules/UpdateProfileForm/UpdateProfileForm";
 import ItemDetailPage from "./organisms/ItemDetailPage";
 import UploadItemPage from "./organisms/UploadItemPage";
 import ProfilePage from "./organisms/ProfilePage/ProfilePage";
-import LeilaoDetailsPage from "./organisms/LeilaoDetailsPage/LeilaoDetailsPage";
+import BackendLayout from "./organisms/BackOffice/BackendLayout/BackendLayout";
+import IndexAdmin from "./organisms/BackOffice/IndexAdmin";
+import GerirItem from "./organisms/BackOffice/GerirItems";
+import GerirUsers from "./organisms/BackOffice/GerirUsers";
+import SeachPage from "./organisms/SearchPage/SearchPage";
+import EditItemPage from "./organisms/EditItemPage/EditItemPage";
+import AcoesSociaisPage from "./organisms/AcoesSociaisPage/AcoesSociaisPage";
+import LeiloesPage from "./organisms/LeiloesPage/LeiloesPage";import LeilaoDetailsPage from "./organisms/LeilaoDetailsPage/LeilaoDetailsPage";
 
 function App() {
   return (
@@ -27,6 +33,16 @@ function App() {
           <Route path="/item" element={<ItemDetailPage />} />
           <Route path="/newItem" element={<UploadItemPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/search" element={<SeachPage />} />
+          <Route path="/edit-item" element={<EditItemPage />} />
+          <Route path="/acoes-sociais" element={<AcoesSociaisPage />} />
+          <Route path="/leiloes" element={<LeiloesPage/>}/>
+        </Route>
+
+        <Route path="/backoffice" element={<BackendLayout />}>
+          <Route index element={<IndexAdmin />} />
+          <Route path="gerirItems" element={<GerirItem />} />
+          <Route path="gerirUsers" element={<GerirUsers />} />
           <Route path="/leilao" element={<LeilaoDetailsPage />} />
         </Route>
       </Routes>

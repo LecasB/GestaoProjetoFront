@@ -1,28 +1,66 @@
 .list {
   display: flex;
-  width: 20%;
-  background-color: red;
   flex-direction: column;
-  position: relative;
+  width: 20%;
   height: 100vh;
+  background-color: #232323;
+  border-right: 1px solid #4B4B4B;
+  padding: 1rem 0;
+  box-sizing: border-box;
+  overflow-y: auto;
 
   .user {
     cursor: pointer;
-    padding: 10px;
-    box-sizing: border-box;
+    padding: 0.75rem 1rem;
     display: flex;
-    width: 100%;
-    background: rgb(187, 187, 187);
-    gap: 10px;
-    border: 1px solid black;
+    align-items: center;
+    gap: 0.75rem;
+    transition: background-color 0.3s, color 0.3s;
+    border-bottom: 1px solid #4B4B4B;
+    color: #ffffff;
 
     &:hover {
-      background-color: gray;
+      background-color: #6A6A6A;
+      color: white;
+
+      p {
+        font-weight: bold;
+        color: white;
+      }
     }
+
     img {
-      width: 50px;
-      height: auto;
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #4B4B4B;
+    }
+
+    p {
+      margin: 0;
+      font-size: 1rem;
+      color: #A59C9C;
+    }
+  }
+
+  .back-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 1rem 1rem 1rem;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    border-bottom: 1px solid #4B4B4B;
+  
+    svg {
+      font-size: 1.2rem;
+    }
+  
+    &:hover {
+      color: #A59C9C;
     }
   }
 }
