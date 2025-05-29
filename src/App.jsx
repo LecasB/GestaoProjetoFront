@@ -15,6 +15,8 @@ import GerirItem from "./organisms/BackOffice/GerirItems";
 import GerirUsers from "./organisms/BackOffice/GerirUsers";
 import SeachPage from "./organisms/SearchPage/SearchPage";
 import EditItemPage from "./organisms/EditItemPage/EditItemPage";
+import AcoesSociaisPage from "./organisms/AcoesSociaisPage/AcoesSociaisPage";
+import LeiloesPage from "./organisms/LeiloesPage/LeiloesPage";
 function App() {
   return (
     <BrowserRouter>
@@ -32,6 +34,8 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/search" element={<SeachPage />} />
           <Route path="/edit-item" element={<EditItemPage />} />
+          <Route path="/acoes-sociais" element={<AcoesSociaisPage />} />
+          <Route path="/leiloes" element={<LeiloesPage/>}/>
         </Route>
 
         <Route path="/backoffice" element={<BackendLayout />}>

@@ -14,8 +14,10 @@ const CardsList = ({ id, filters, numOfResults, itemType }) => {
       if (id) {
         if (itemType == "WISHLIST"){
         url = `https://xuoapi.azurewebsites.net/api/v1/favorite/getAllByUserId/${id}`; 
+        }else if(itemType == "BOUGHT"){
+        url = `https://xuoapi.azurewebsites.net/api/v1/buy/${id}`
         }else{
-        url = `${baseUrl}/user/${id}`;
+          url = `${baseUrl}/user/${id}`;
         }
       } else {
         url = filters ? `${baseUrl}?${filters}` : baseUrl;

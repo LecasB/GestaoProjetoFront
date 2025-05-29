@@ -17,10 +17,10 @@ const handleOptionClick = (option) => {
   setValue(option);
 
   switch (option) {
-    case "VENDIDOS":
+    case "SOLD":
       searchParams.set("items", "sold");
       break;
-    case "COMPRADOS":
+    case "BOUGHT":
       searchParams.set("items", "bought");
       break;
     case "WISHLIST":
@@ -68,8 +68,8 @@ const handleOptionClick = (option) => {
 
       {isOpen && (
         <ul className="filter-dropdown">
-          <li onClick={() => handleOptionClick("VENDIDOS")}>VENDIDOS</li>
-          <li onClick={() => handleOptionClick("COMPRADOS")}>COMPRADOS</li>
+          <li onClick={() => handleOptionClick("SOLD")}>VENDIDOS</li>
+          <li onClick={() => handleOptionClick("BOUGHT")}>COMPRADOS</li>
           <li onClick={() => handleOptionClick("WISHLIST")}>WISHLIST</li>
         </ul>
       )}
