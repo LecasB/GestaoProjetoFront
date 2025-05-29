@@ -12,7 +12,7 @@ const PopupUserInfo = ({ info, id, close }) => {
         let url = "";
 
         if (infor === "followers" || infor === "following") {
-          url = `https://xuoapi.azurewebsites.net/api/v1/user/${id}/followers`;
+          url = `https://xuoapi.azurewebsites.net/api/v1/follow/status/${id}`;
         } else if (infor === "reviews") {
           url = `https://xuoapi.azurewebsites.net/api/v1/review/${id}`;
         } else {
@@ -23,18 +23,20 @@ const PopupUserInfo = ({ info, id, close }) => {
         const responseData = await response.json();
         setData(responseData);
 
-        // Fetch additional user info
         const items = responseData[infor] || [];
         const details = {};
 
         for (const item of items) {
-          const res = await fetch(`https://xuoapi.azurewebsites.net/api/v1/user/${item.idUser}`);
+          const userId = typeof item === "string" ? item : item.idUser;
+
+          const res = await fetch(
+            `https://xuoapi.azurewebsites.net/api/v1/user/${userId}`
+          );
           const userData = await res.json();
-          details[item.idUser] = userData;
+          details[userId] = userData;
         }
 
         setUserDetails(details);
-
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -82,7 +84,10 @@ const PopupUserInfo = ({ info, id, close }) => {
     >
       <div className="popup-user-info">
         {(infor === "following" || infor === "followers") && (
-          <div className="pop-user-info__tabs">
+          <div
+            style={{ display: "flex", gap: "10px" }}
+            className="pop-user-info__tabs"
+          >
             <p
               className={infor === "followers" ? "active" : ""}
               onClick={() => setInfor("followers")}
@@ -99,27 +104,40 @@ const PopupUserInfo = ({ info, id, close }) => {
         )}
 
         <div className="pop-user-info__content">
-          {data && data[infor] ? (
-            data[infor].map((item, index) => {
-              const user = userDetails[item.idUser];
-              return (
-                <div key={index} className="pop-user-info__item">
-                  <div style={{ display: "flex", gap: "15px", alignItems: "center" }}>
-                    <img
-                      style={{ height: "50px", width: "50px", borderRadius: "50%" }}
-                      src={user?.image || "default-profile.png"}
-                      alt="Profile"
-                    />
-                    <strong>{user?.username || "Unknown User"}</strong>
+          {data && data[infor]
+            ? data[infor].map((item, index) => {
+                const userId = typeof item === "string" ? item : item.idUser;
+                const user = userDetails[userId];
+                return (
+                  <div key={index} className="pop-user-info__item">
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: "15px",
+                        alignItems: "center",
+                      }}
+                    >
+                      <img
+                        style={{
+                          height: "50px",
+                          width: "50px",
+                          borderRadius: "50%",
+                        }}
+                        src={user?.image || "default-profile.png"}
+                        alt="Profile"
+                      />
+                      <strong>{user?.username || "Unknown User"}</strong>
+                    </div>
+                    {infor === "reviews" && (
+                      <>
+                        <p>{renderStars(item.rate)}</p>
+                        <p>{item.descricao}</p>
+                      </>
+                    )}
                   </div>
-                  <p>{renderStars(item.rate)}</p>
-                  {infor === "reviews" && <p>{item.descricao}</p>}
-                </div>
-              );
-            })
-          ) : (
-            <p>Loading...</p>
-          )}
+                );
+              })
+            : ""}
         </div>
       </div>
     </Dialog>
