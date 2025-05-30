@@ -98,6 +98,15 @@ const FormNovoLeilao = () => {
       )}
       <ErrorToast messages={toastErrors} onClose={() => setToastErrors([])} />
       <div className="cmp-leilaoform_container">
+      <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="cmp-leilaoform_video-bg"
+        >
+          <source src={XuoBackgroundVid} type="video/mp4" />
+        </video>
         <form className="cmp-leilaoform_container_form" onSubmit={handleSubmit}>
           <img
             src={XuoPng}
@@ -145,16 +154,6 @@ const FormNovoLeilao = () => {
           />
           <button type="submit">Criar leilão</button>
         </form>
-
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="cmp-leilaoform_video-bg"
-        >
-          <source src={XuoBackgroundVid} type="video/mp4" />
-        </video>
       </div>
     </>
   );
