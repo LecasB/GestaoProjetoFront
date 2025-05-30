@@ -5,10 +5,6 @@ import LeilaoCard from "../../atoms/LeilaoCard/LeilaoCard";
 const LeiloesPage = () => {
   const [data, setData] = useState([]);
 
-  function formatDateString(isoDate) {
-    return isoDate.split("T")[0];
-  }
-
   useEffect(() => {
     fetch("https://xuoapi.azurewebsites.net/api/v1/leilao")
       .then((res) => res.json())
@@ -21,13 +17,13 @@ const LeiloesPage = () => {
       {data.map((item, key) => (
         <Link
           key={key}
-          to={`/leilao?id=${item._id}`} // <- usando search param
+          to={`/leilao?id=${item._id}`}
           style={{ textDecoration: "none", color: "inherit" }}
         >
           <LeilaoCard
             descricao={item.descricao}
-            dataInicio={formatDateString(item.dataInicio)}
-            dataFim={formatDateString(item.dataFim)}
+            dataInicio={item.dataInicio}
+            dataFim={item.dataFim}
             imagem={item.imagem[0]}
             preco={item.preco}
           />
