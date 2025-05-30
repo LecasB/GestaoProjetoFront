@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import LeilaoCard from "../../atoms/LeilaoCard/LeilaoCard";
+import "./LeiloesPage.scss"
 
 const LeiloesPage = () => {
   const [data, setData] = useState([]);
@@ -13,7 +14,7 @@ const LeiloesPage = () => {
   }, []);
 
   return (
-    <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+    <div className="leilao-list">
       {data.map((item, key) => (
         <Link
           key={key}

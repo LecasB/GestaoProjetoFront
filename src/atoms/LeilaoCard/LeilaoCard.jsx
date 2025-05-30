@@ -16,7 +16,7 @@ const LeilaoCard = ({ descricao, imagem, preco, dataInicio, dataFim }) => {
   };
 
   return (
-    <div className="leilao-card">
+    <div className="leilao-card" style={{height: "400px", width: "260px"}}>
       <div className="leilao-card__image-container">
         <img
           src={imagem}
