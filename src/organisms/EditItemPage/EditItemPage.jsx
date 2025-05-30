@@ -67,7 +67,7 @@ const EditItemPage = () => {
   };
 
   return (
-    <div>
+    <div className="editItem">
       <h1>Edit Item Page</h1>
       <form>
         <div>
