@@ -1,0 +1,118 @@
+.bg-loading {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+  background-color: rgba(128, 128, 128, 0.432);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .loader {
+    border: 10px solid #f3f3f3;
+    border-top: 10px solid #3498db;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 2s linear infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(720deg);
+    }
+  }
+}
+
+.cmp-leilaoform {
+  &_video-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &_container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &_form {
+      z-index: 1;
+      width: 700px;
+      padding: 40px;
+      background: rgba(35, 35, 35, 0.95);
+      border: 1px solid #4b4b4b;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      color: white;
+
+      &_logo {
+        width: 160px;
+        height: auto;
+        margin-bottom: 30px;
+      }
+
+      &_textinput {
+        width: 100%;
+        height: 56px;
+        background: #373737;
+        color: #a59c9c;
+        border: none;
+        padding: 0 16px;
+        font-size: 16px;
+        border-radius: 4px;
+
+        &::placeholder {
+          color: #a59c9c;
+        }
+      }
+
+      input[type="file"] {
+        background: transparent;
+        color: #fff;
+        border: none;
+        padding: 6px;
+        width: 100%;
+      }
+
+      button {
+        width: 100%;
+        height: 56px;
+        background-color: #6a6a6a;
+        color: white;
+        border: none;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #555;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .cmp-leilaoform_container_form {
+    width: 90%;
+    padding: 24px;
+
+    &_textinput,
+    button {
+      width: 100%;
+    }
+  }
+}
