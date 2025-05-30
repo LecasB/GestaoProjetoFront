@@ -1,0 +1,21 @@
+.leilao-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+
+}
+
+@media (max-width: 930px) {
+    .leilao-list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  
+  @media (max-width: 480px) {
+    .leilao-list {
+      grid-template-columns: 1fr;
+    }
+  }

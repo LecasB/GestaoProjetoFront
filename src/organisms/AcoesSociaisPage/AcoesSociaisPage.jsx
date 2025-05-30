@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import SocialActionCard from "../../atoms/SocialCardAction/SocialCardAction";
+import "./AcoesSociaisPage.scss"
 
 const AcoesSociaisPage = () => {
   const [data, setData] = useState([]);
@@ -13,7 +14,7 @@ const AcoesSociaisPage = () => {
   }, []);
 
   return (
-    <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+    <div className="acoes-sociais-list" style={{ maxWidth: "1200px", margin: "0 auto" }}>
       {data.map((item, key) => (
         <Link
           key={key}
