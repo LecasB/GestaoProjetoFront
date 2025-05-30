@@ -20,6 +20,7 @@ import AcoesSociaisPage from "./organisms/AcoesSociaisPage/AcoesSociaisPage";
 import LeiloesPage from "./organisms/LeiloesPage/LeiloesPage";
 import LeilaoDetailsPage from "./organisms/LeilaoDetailsPage/LeilaoDetailsPage";
 import AcaoSocialDetails from "./organisms/AcaoSocialDetails/AcaoSocialDetails";
+import FormNovoLeilao from "./organisms/FormNovoLeilao/FormNovoLeilao";
 
 function App() {
   return (
@@ -29,7 +30,7 @@ function App() {
         <Route index path="/login" element={<LoginForm />} />
         <Route path="/signup" element={<SignUpForm />} />
         <Route path="/mensagens" element={<MessagePage />} />
-        <Route path="/test" element={<LeilaoDetailsPage />} />
+        <Route path="/test" element={<FormNovoLeilao />} />
 
         <Route path="/" element={<Layout />}>
           <Route path="/index" element={<TestPage />} />
@@ -41,7 +42,8 @@ function App() {
           <Route path="/acoes-sociais" element={<AcoesSociaisPage />} />
           <Route path="/acao-social" element={<AcaoSocialDetails />} />
           <Route path="/leiloes" element={<LeiloesPage/>}/>
-           <Route path="/leilao" element={<LeilaoDetailsPage />} />
+          <Route path="/leilao" element={<LeilaoDetailsPage />} />
+          <Route path="/criarLeilao" element={<FormNovoLeilao />} />
         </Route>
 
         <Route path="/backoffice" element={<BackendLayout />}>
