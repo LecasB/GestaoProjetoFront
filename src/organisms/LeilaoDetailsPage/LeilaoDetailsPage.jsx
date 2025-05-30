@@ -12,12 +12,16 @@ const LeilaoDetailsPage = () => {
   const [bidAmount, setBidAmount] = useState("");
   const [highestBid, setHighestBid] = useState(0);
   const [lastBidder, setLastBidder] = useState("Desconhecido");
+  const [timeRemaining, setTimeRemaining] = useState("");
+  const [auctionEnded, setAuctionEnded] = useState(false);
 
   const itemId = searchParams.get("id") ?? "6827c531cd393c9e354013c5";
 
   const getBidderName = async (id) => {
     try {
-      const res = await fetch(`https://xuoapi.azurewebsites.net/api/v1/user/${id}`);
+      const res = await fetch(
+        `https://xuoapi.azurewebsites.net/api/v1/user/${id}`
+      );
       if (!res.ok) return "Desconhecido";
       const user = await res.json();
       return user.username || "Desconhecido";
@@ -29,7 +33,9 @@ const LeilaoDetailsPage = () => {
 
   const getAuctionDetails = async () => {
     try {
-      const response = await fetch(`https://xuoapi.azurewebsites.net/api/v1/leilao/${itemId}`);
+      const response = await fetch(
+        `https://xuoapi.azurewebsites.net/api/v1/leilao/${itemId}`
+      );
       const data = await response.json();
 
       setItemDetails(data);
@@ -40,6 +46,28 @@ const LeilaoDetailsPage = () => {
     } catch (error) {
       console.error("Erro ao buscar dados do leilão:", error);
     }
+  };
+
+  const calculateTimeLeft = (endDate) => {
+    const now = new Date();
+    const end = new Date(endDate);
+    const diff = end - now;
+
+    if (diff <= 0) {
+      setAuctionEnded(true);
+      return "Leilão terminado";
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    const parts = [];
+    if (days) parts.push(`${days}d`);
+    parts.push(`${hours}h ${minutes}m ${seconds}s`);
+
+    return parts.join(" ");
   };
 
   const handleBid = async () => {
@@ -91,6 +119,16 @@ const LeilaoDetailsPage = () => {
     getAuctionDetails();
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (itemDetails?.dataFim) {
+        setTimeRemaining(calculateTimeLeft(itemDetails.dataFim));
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [itemDetails]);
+
   return (
     <div className="cmp-leilao-page">
       {itemDetails && (
@@ -103,22 +141,34 @@ const LeilaoDetailsPage = () => {
             <p>{itemDetails.descricao}</p>
             <div className="cmp-leilao-page__item-detail--description--price-and-report">
               <b>Oferta mais alta: {highestBid}€</b>
-              <span>Última oferta feita por: {lastBidder}</span>
+              <span>
+                {auctionEnded ? "Vencedor:" : "Última oferta feita por:"}{" "}
+                {lastBidder}
+              </span>
+              <span
+                style={{
+                  color: auctionEnded ? "grey" : "#cc0000",
+                  fontWeight: "bold",
+                }}
+              >
+                Tempo restante: {timeRemaining}
+              </span>
               <ReportButton />
             </div>
             <div className="cmp-leilao-page__item-detail--description--buttons">
               <button
                 className="cmp-leilao-page__item-detail--description--buttons--btn_primary"
                 onClick={() => setShowPopup(true)}
+                disabled={auctionEnded}
               >
-                Licitar
+                {auctionEnded ? "Leilão terminado" : "Licitar"}
               </button>
             </div>
           </div>
         </div>
       )}
 
-      {showPopup && (
+      {showPopup && !auctionEnded && (
         <div className="popup">
           <div className="popup-content">
             <h3>Introduz o valor da licitação</h3>

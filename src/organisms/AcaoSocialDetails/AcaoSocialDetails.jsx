@@ -19,28 +19,28 @@ const AcaoSocialDetails = () => {
   }, [actionId]);
 
   return (
-  <div className="acao-social-details">
-    {action ? (
-      <>
-        <h1>{action.title}</h1>
-        <div className="image-container">
-          <img src={action.images[0]} alt={action.title} />
-        </div>
-        <p className="description">{action.description}</p>
-        <div className="tags">
-          {action.objetivos?.map((tag, index) => (
-            <span className="tag" key={index}>
-              {tag}
-            </span>
-          ))}
-        </div>
-        <Button label="Fazer oferta"></Button>
-      </>
-    ) : (
-      <p>A carregar...</p>
-    )}
-  </div>
-);
+    <div className="acao-social-details">
+      {action ? (
+        <>
+          <h1>{action.title}</h1>
+          <div className="image-container">
+            <img src={action.images[0]} alt={action.title} />
+          </div>
+          <p className="description">{action.description}</p>
+          <div className="tags">
+            {action.objetivos?.map((tag, index) => (
+              <span className="tag" key={index}>
+                {tag}
+              </span>
+            ))}
+          </div>
+          <Button label="Fazer oferta"></Button>
+        </>
+      ) : (
+        <p>A carregar...</p>
+      )}
+    </div>
+  );
 };
 
 export default AcaoSocialDetails;
