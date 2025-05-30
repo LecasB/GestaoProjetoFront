@@ -32,7 +32,7 @@ const ItemDetailPage = () => {
   }, []);
   return (
     <div className="cmp-item-detail-page">
-      {(buyPopup && tipoCompra == "buy") && <PopupConfirmation description={`Confirma que quer comprar o produto ${itemDetails.title}`} header={"Confirmação"} id={itemDetails._id} />}
+      {(buyPopup && tipoCompra == "buy") && <PopupConfirmation description={`Confirma que quer comprar o produto ${itemDetails.title}`} header={"Confirmação"} id={itemDetails._id} type={tipoCompra} />}
       {(buyPopup && tipoCompra == "offer") && <PopupConfirmation description={`Deseja negociar o preço do ${itemDetails.title}`} header={"Negociar"} id={itemDetails._id} itemName={itemDetails.title} idseller={itemDetails.idseller} />}
       {itemDetails && (
         <div className="cmp-item-detail-page__item-detail">
