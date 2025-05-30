@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import ItemImagesUpload from "./ItemImagesUpload";
+import "./UploadItemPage.scss";
 
 const UploadItemPage = () => {
   const [images, setImages] = useState([]);
@@ -34,7 +35,7 @@ const UploadItemPage = () => {
     formData.append("description", description);
     formData.append("condition", condition);
     formData.append("price", price);
-    formData.append("visibility", "onsale"); // ou permitir escolher no formulário
+    formData.append("visibility", "onsale"); //ou deixa escolher no formulario
 
     images.forEach((file) => {
       formData.append("images", file);
@@ -53,7 +54,6 @@ const UploadItemPage = () => {
       console.log("Item enviado com sucesso:", data);
       alert("Item enviado com sucesso!");
 
-      // Opcional: limpar os campos
       document.querySelector('input[placeholder="title"]').value = "";
       document.querySelector('textarea[name="description"]').value = "";
       document.querySelector('select[name="estado"]').value = "new";
@@ -66,20 +66,22 @@ const UploadItemPage = () => {
   };
 
   return (
-    <div>
-      <input type="text" placeholder="title" />
-      <textarea name="description" placeholder="description"></textarea>
-      <select name="estado">
-        <option value="new">New</option>
-        <option value="refurbished">Refurbished</option>
-        <option value="used">Used</option>
-        <option value="broken">Broken</option>
-      </select>
-      <input type="price" placeholder="price" />
-
-      <ItemImagesUpload onImagesSelected={setImages} />
-
-      <button onClick={handleSubmit}>Enviar Item</button>
+    <div className="cmp-uploaditemform_container">
+      <form className="cmp-uploaditemform_container_form">
+        <input type="text" placeholder="Title" />
+        <textarea name="description" placeholder="Description"></textarea>
+        <select name="estado">
+          <option value="new">New</option>
+          <option value="refurbished">Refurbished</option>
+          <option value="used">Used</option>
+          <option value="broken">Broken</option>
+        </select>
+        <input type="price" placeholder="Price" />
+        <ItemImagesUpload onImagesSelected={setImages} />
+        <button type="button" onClick={handleSubmit}>
+          Enviar Item
+        </button>
+      </form>
     </div>
   );
 };
