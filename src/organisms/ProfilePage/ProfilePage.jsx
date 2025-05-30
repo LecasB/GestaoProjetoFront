@@ -2,7 +2,7 @@ import "./ProfilePage.scss";
 import { useEffect, useState, useRef } from "react";
 import { FaPencilAlt } from "react-icons/fa";
 import CardsList from "../../molecules/CardsList/CardsList";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
@@ -12,6 +12,7 @@ import { Button } from "primereact/button";
 import PopupUserInfo from "../../molecules/PopupUserInfo/PopupUserInfo";
 
 const ProfilePage = () => {
+  const navigate = useNavigate()
   const [searchParams] = useSearchParams();
   const id = searchParams.get("id");
   const [userDetails, setUserDetails] = useState("");
@@ -196,6 +197,7 @@ const ProfilePage = () => {
     setShowPopupUser(false);
   };
 
+
   const changeFollowState = async (state) => {
     const endpoint =
       state === "follow"
@@ -378,6 +380,9 @@ const ProfilePage = () => {
                     label="Follow"
                   ></Button>
                 )}
+                <Button onClick={() => navigate(`/newReview?id=${userDetails._id}`)}>
+                  Deixa uma Review
+                </Button>
               </div>
             )}
           </div>
