@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import ItemImagesUpload from "./ItemImagesUpload";
+import "./UploadItemPage.scss"
 
 const UploadItemPage = () => {
   const [images, setImages] = useState([]);
@@ -66,7 +67,8 @@ const UploadItemPage = () => {
   };
 
   return (
-    <div>
+   <div className="upload-item-container">
+    <div className="form-card">
       <input type="text" placeholder="title" />
       <textarea name="description" placeholder="description"></textarea>
       <select name="estado">
@@ -77,11 +79,14 @@ const UploadItemPage = () => {
       </select>
       <input type="price" placeholder="price" />
 
-      <ItemImagesUpload onImagesSelected={setImages} />
+      <div className="image-upload">
+        <ItemImagesUpload onImagesSelected={setImages} />
+      </div>
 
       <button onClick={handleSubmit}>Enviar Item</button>
     </div>
-  );
+  </div>
+);
 };
 
 export default UploadItemPage;
