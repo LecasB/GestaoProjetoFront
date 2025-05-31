@@ -48,9 +48,8 @@ const Header = () => {
   };
 
   const applyFilters = () => {
-    
     let query = `/search?title=${encodeURIComponent(value)}`;
-  
+
     if (condition.length > 0) {
       query += `&condition=${condition.join(",")}`;
     }
@@ -60,9 +59,9 @@ const Header = () => {
     if (maxValue !== null) {
       query += `&maxPrice=${maxValue}`;
     }
-  
+
     navigate(query);
-    setShowFilter(false); 
+    setShowFilter(false);
   };
 
   const handleUserInfo = async () => {
@@ -128,6 +127,7 @@ const Header = () => {
                   alt="XUO Logo"
                   className="logo"
                   onClick={() => navigate("/index")}
+                  style={{ cursor: "pointer" }}
                 />
               )}
             </div>
