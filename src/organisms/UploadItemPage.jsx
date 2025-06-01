@@ -6,6 +6,11 @@ const UploadItemPage = () => {
   const [images, setImages] = useState([]);
   const [userId, setUserId] = useState(null);
 
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [condition, setCondition] = useState("new");
+  const [price, setPrice] = useState("");
+
   useEffect(() => {
     const id = sessionStorage.getItem("id");
     if (id) setUserId(id);
@@ -17,25 +22,18 @@ const UploadItemPage = () => {
       return;
     }
 
-    const title = document.querySelector('input[placeholder="title"]').value;
-    const description = document.querySelector(
-      'textarea[name="description"]'
-    ).value;
-    const condition = document.querySelector('select[name="estado"]').value;
-    const price = document.querySelector('input[placeholder="price"]').value;
-
     if (!title || !description || !condition || !price || images.length === 0) {
       alert("Preenche todos os campos e seleciona até 3 imagens.");
       return;
     }
 
     const formData = new FormData();
-    formData.append("idseller", sessionStorage.getItem("id"));
+    formData.append("idseller", userId);
     formData.append("title", title);
     formData.append("description", description);
     formData.append("condition", condition);
     formData.append("price", price);
-    formData.append("visibility", "onsale"); //ou deixa escolher no formulario
+    formData.append("visibility", "onsale");
 
     images.forEach((file) => {
       formData.append("images", file);
@@ -54,10 +52,11 @@ const UploadItemPage = () => {
       console.log("Item enviado com sucesso:", data);
       alert("Item enviado com sucesso!");
 
-      document.querySelector('input[placeholder="title"]').value = "";
-      document.querySelector('textarea[name="description"]').value = "";
-      document.querySelector('select[name="estado"]').value = "new";
-      document.querySelector('input[placeholder="price"]').value = "";
+      // Limpar formulário
+      setTitle("");
+      setDescription("");
+      setCondition("new");
+      setPrice("");
       setImages([]);
     } catch (error) {
       console.error("Erro no upload:", error);
@@ -67,16 +66,48 @@ const UploadItemPage = () => {
 
   return (
     <div className="cmp-uploaditemform_container">
-      <form className="cmp-uploaditemform_container_form">
-        <input type="text" placeholder="Title" />
-        <textarea name="description" placeholder="Description"></textarea>
-        <select name="estado">
+      <form
+        className="cmp-uploaditemform_container_form"
+        onSubmit={(e) => e.preventDefault()}
+      >
+        <input
+          type="text"
+          placeholder="Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <textarea
+          name="description"
+          placeholder="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        ></textarea>
+        <select
+          name="estado"
+          value={condition}
+          onChange={(e) => setCondition(e.target.value)}
+        >
           <option value="new">New</option>
           <option value="refurbished">Refurbished</option>
           <option value="used">Used</option>
           <option value="broken">Broken</option>
         </select>
-        <input type="price" placeholder="Price" />
+        <input
+          type="number"
+          placeholder="Price"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          style={{
+            width: "100%",
+            height: "56px",
+            background: "#373737",
+            color: "#a59c9c",
+            border: "none",
+            padding: "0 16px",
+            fontSize: "16px",
+            borderRadius: "4px",
+          }}
+        />
         <ItemImagesUpload onImagesSelected={setImages} />
         <button type="button" onClick={handleSubmit}>
           Enviar Item
