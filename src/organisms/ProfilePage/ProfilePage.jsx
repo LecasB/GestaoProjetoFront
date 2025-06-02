@@ -424,6 +424,7 @@ const ProfilePage = () => {
             maxWidth: "1278px",
             margin: "0 auto",
           }}
+          
         >
           <h1 style={{ padding: "0px 0px 0px 20px" }}>Items</h1>
           {userDetails._id == sessionStorage.getItem("id") && (
