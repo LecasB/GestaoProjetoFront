@@ -17,6 +17,7 @@
       height: 250px;
       width: 250px;
       border-radius: 50%;
+      object-fit: cover;
     }
   }
 
@@ -46,5 +47,110 @@
     &__description {
       padding: 0px 0px 0px 20px;
     }
+  }
+
+  &__items {
+    width: 100%;
+    max-width: 1278px;
+    margin: 0 auto;
+    padding: 0 20px;
+
+    > div {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      h1 {
+        padding: 0 0 10px 0;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .cmp-profile-page {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+
+    &__avatar {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+
+      &--image {
+        width: 150px;
+        height: 150px;
+        min-width: unset;
+        min-height: unset;
+      }
+    }
+
+    &__info {
+      width: 100%;
+      max-width: 700px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+
+      &__top {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+
+        &__userNstars {
+          flex-direction: column;
+          align-items: center;
+          gap: 5px;
+        }
+      }
+
+      &__middle {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      &__description {
+        padding: 10px 20px 0;
+        text-align: center;
+      }
+    }
+
+    &__items {
+      width: 100%;
+      max-width: 1278px;
+      padding: 0 20px;
+      margin: 0 auto;
+
+      > div {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        h1 {
+          font-size: 20px;
+          margin-bottom: 10px;
+          text-align: left;
+        }
+      }
+    }
+  }
+
+  .p-button {
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 10px;
+  }
+
+  .cmp-profile-page__info__top img {
+    height: 16px !important;
+    width: auto;
   }
 }
