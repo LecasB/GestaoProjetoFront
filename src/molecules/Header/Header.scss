@@ -260,6 +260,20 @@
   height: 40px;
 }
 
+.drawerLinks a {
+  color: white;
+  text-decoration: none;
+
+  &:visited {
+    color: white;
+  }
+
+  &:hover {
+    text-decoration: none;
+    background-color: #01364a;
+  }
+}
+
 /* Animations */
 @keyframes drawerSlideIn {
   from {

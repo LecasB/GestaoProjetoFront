@@ -100,10 +100,22 @@ const Header = () => {
         {isMobile && showSearch ? (
           <div className={`mobileSearchHeader ${closingSearch ? "hide" : ""}`}>
             <div className="searchWrapper">
-              <input type="text" placeholder="Pesquisar..." autoFocus />
+              <input
+                type="text"
+                placeholder="Pesquisar..."
+                autoFocus
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") applyFilters();
+                }}
+              />
               <div className="iconsRight">
-                <FaSearch className="searchIcon" />
-                <FaFilter className="filterIcon" />
+                <FaSearch className="searchIcon" onClick={applyFilters} />
+                <FaFilter
+                  className="filterIcon"
+                  onClick={() => setShowFilter(!showFilter)}
+                />
               </div>
             </div>
             <RxCrossCircled
@@ -226,12 +238,30 @@ const Header = () => {
             </div>
             <img src={logo} alt="XUO Logo" className="drawerLogo" />
           </div>
-          <ul>
-            <li>Início</li>
-            <li>Vender</li>
-            <li>Notificações</li>
-            <li>Mensagens</li>
-            <li>Perfil</li>
+          <ul className="drawerLinks">
+            <li>
+              <Link to="/index" onClick={handleDrawerClose}>
+                Início
+              </Link>
+            </li>
+            <li>
+              <Link to="/newItem" onClick={handleDrawerClose}>
+                Vender
+              </Link>
+            </li>
+            <li>
+              <Link to="/mensagens" onClick={handleDrawerClose}>
+                Mensagens
+              </Link>
+            </li>
+            <li>
+              <Link
+                to={isLogin ? "/profile" : "/login"}
+                onClick={handleDrawerClose}
+              >
+                Perfil
+              </Link>
+            </li>
           </ul>
         </div>
       )}
